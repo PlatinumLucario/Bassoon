@@ -1,8 +1,9 @@
+build/
 include/
 lib/
 share/
-
-*.so
+src/
+tmp/
 
 # From building libsndfile
 libsndfile-1.0.28.tar.gz
@@ -16,7 +17,3 @@ ogg-1.3.3/
 
 vorbis-1.3.6.tar.gz
 vorbis-1.3.6/
-
-# From portaudio
-portaudio_v19.tar.gz
-portaudio/
