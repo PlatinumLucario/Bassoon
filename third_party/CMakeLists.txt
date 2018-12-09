@@ -48,3 +48,14 @@ ExternalProject_Add(flac
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
+
+# Now we can build libsndfile
+ExternalProject_Add(libsndfile
+    URL https://github.com/erikd/libsndfile/archive/1.0.28.tar.gz
+    PREFIX ${THIRD_PARTY_DIR}
+    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/libsndfile/autogen.sh             # First need to run autogen.sh
+        COMMAND CFLAGS=-I${THIRD_PARTY_DIR}/include                            #   (Unforntately, searching for FLAC is a little broken, so I need to add that `CFLAGS` thingy)
+                ${THIRD_PARTY_DIR}/src/libsndfile/configure                    # Then configure.sh
+                --prefix=${THIRD_PARTY_DIR}
+    BUILD_IN_SOURCE 1
+)
