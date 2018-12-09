@@ -34,3 +34,22 @@ Help Wanted
 - NuGet packaging
 - Documentation fixups
   - Including have the Doxygen docs built automatically
+
+
+Developing
+----------
+
+TODO: double check steps on OS X & Windows
+TODO: requirements (e.g. C compiler, CMake, GNU tools?)
+
+1. Get & build the native libraries.  You only need to do this once (unless you
+   remove everything).
+   
+   ```bash
+   cd third_party
+   cmake .
+   make
+   ```
+
+1. Set the environment.  C# (.NET) needs to be able to find the native libraries.
+   - On Linux & OS X: `source set_dev_env.sh`
