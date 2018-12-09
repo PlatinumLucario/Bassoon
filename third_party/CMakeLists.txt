@@ -28,3 +28,13 @@ ExternalProject_Add(ogg
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
+
+# Vorbis 2nd
+ExternalProject_Add(vorbis
+    URL https://github.com/xiph/vorbis/archive/v1.3.6.tar.gz
+    PREFIX ${THIRD_PARTY_DIR}
+    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/vorbis/autogen.sh             # First need to run autogen.sh
+        COMMAND ${THIRD_PARTY_DIR}/src/vorbis/configure                    # Then configure.sh
+                --prefix=${THIRD_PARTY_DIR}
+    BUILD_IN_SOURCE 1
+)
