@@ -56,8 +56,9 @@ ExternalProject_Add(libsndfile
     PREFIX ${THIRD_PARTY_DIR}
     CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/libsndfile/autogen.sh      # First need to run autogen.sh
         COMMAND CFLAGS=-I${THIRD_PARTY_DIR}/include                     #   (Unforntately, searching for FLAC is a little broken, so I need to add that `CFLAGS` thingy)
+                PKG_CONFIG_PATH=${THIRD_PARTY_DIR}/lib/pkgconfig        #   (Required to filnd OGG/Vorbis/FLAC)
                 ${THIRD_PARTY_DIR}/src/libsndfile/configure             # Then configure.sh
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
-add_dependencies(flac ogg vorbis flac)
+add_dependencies(libsndfile ogg vorbis flac)
