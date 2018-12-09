@@ -38,3 +38,13 @@ ExternalProject_Add(vorbis
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
+
+# And FLAC 3rd
+ExternalProject_Add(flac
+    URL https://github.com/xiph/flac/archive/1.3.2.tar.gz
+    PREFIX ${THIRD_PARTY_DIR}
+    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/flac/autogen.sh             # First need to run autogen.sh
+        COMMAND ${THIRD_PARTY_DIR}/src/flac/configure                    # Then configure.sh
+                --prefix=${THIRD_PARTY_DIR}
+    BUILD_IN_SOURCE 1
+)
