@@ -8,6 +8,8 @@ A simple C#/.NET API to load & play audio files.
 Sub-Projects
 ------------
 
+These are all found in `src/Bassoon/`
+
 - `libsndfileSharp`: C# bindings to `libsndfile`.  Only supports file reading
   funcitonality at the moment.
 - `FileInfo`: Example of how to use the `libsndfile` bindings, by printing
@@ -16,6 +18,10 @@ Sub-Projects
   playback (but recording should work too).
 - `Sinewave`: Example of how to use the `PortAudio` bindings, by playing a
   Sinewave for five seconds.
+- `BassonSimpleExample`: A very simple example of how to use Bassoon to play
+  back an audio file in the console.
+- `Jukebox`: A more complex example of Basson, which uses Gtk 3.x to create a
+  mini audio player.  You can pause, play, rewind, scrub, and adjust the volume.
 
 
 
