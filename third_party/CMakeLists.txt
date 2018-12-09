@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.0)
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
@@ -33,8 +32,8 @@ ExternalProject_Add(ogg
 ExternalProject_Add(vorbis
     URL https://github.com/xiph/vorbis/archive/v1.3.6.tar.gz
     PREFIX ${THIRD_PARTY_DIR}
-    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/vorbis/autogen.sh             # First need to run autogen.sh
-        COMMAND ${THIRD_PARTY_DIR}/src/vorbis/configure                    # Then configure.sh
+    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/vorbis/autogen.sh          # First need to run autogen.sh
+        COMMAND ${THIRD_PARTY_DIR}/src/vorbis/configure                 # Then configure.sh
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
@@ -43,8 +42,8 @@ ExternalProject_Add(vorbis
 ExternalProject_Add(flac
     URL https://github.com/xiph/flac/archive/1.3.2.tar.gz
     PREFIX ${THIRD_PARTY_DIR}
-    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/flac/autogen.sh             # First need to run autogen.sh
-        COMMAND ${THIRD_PARTY_DIR}/src/flac/configure                    # Then configure.sh
+    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/flac/autogen.sh            # First need to run autogen.sh
+        COMMAND ${THIRD_PARTY_DIR}/src/flac/configure                   # Then configure.sh
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
@@ -53,9 +52,9 @@ ExternalProject_Add(flac
 ExternalProject_Add(libsndfile
     URL https://github.com/erikd/libsndfile/archive/1.0.28.tar.gz
     PREFIX ${THIRD_PARTY_DIR}
-    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/libsndfile/autogen.sh             # First need to run autogen.sh
-        COMMAND CFLAGS=-I${THIRD_PARTY_DIR}/include                            #   (Unforntately, searching for FLAC is a little broken, so I need to add that `CFLAGS` thingy)
-                ${THIRD_PARTY_DIR}/src/libsndfile/configure                    # Then configure.sh
+    CONFIGURE_COMMAND ${THIRD_PARTY_DIR}/src/libsndfile/autogen.sh      # First need to run autogen.sh
+        COMMAND CFLAGS=-I${THIRD_PARTY_DIR}/include                     #   (Unforntately, searching for FLAC is a little broken, so I need to add that `CFLAGS` thingy)
+                ${THIRD_PARTY_DIR}/src/libsndfile/configure             # Then configure.sh
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
