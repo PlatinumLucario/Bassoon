@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
-set(THIRD_PARTY_DIR "$ENV{BASSOON_ROOT}/third_party")
+set(THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR})
+message(STATUS ${THIRD_PARTY_DIR})
 
 
 # Build Portaudio
@@ -47,6 +48,7 @@ ExternalProject_Add(flac
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
+add_dependencies(flac ogg)
 
 # Now we can build libsndfile
 ExternalProject_Add(libsndfile
@@ -58,3 +60,4 @@ ExternalProject_Add(libsndfile
                 --prefix=${THIRD_PARTY_DIR}
     BUILD_IN_SOURCE 1
 )
+add_dependencies(flac ogg vorbis flac)
