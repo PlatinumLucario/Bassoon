@@ -325,3 +325,6 @@ ASALocalRun/
 *.wav
 *.ogg
 *.flac
+
+# Doxygen
+docs_html
