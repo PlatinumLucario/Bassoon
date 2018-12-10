@@ -7,7 +7,7 @@ namespace BassoonSimpleExample
     {
         static void Main(string[] args)
         {
-            // doesn't really need to be in `using` block, but here for `IDisposable` testing
+            // Doesn't really need to be in `using` block, but here for `IDisposable` testing
             using (BassoonEngine be = new BassoonEngine())
             {
                 Console.WriteLine("Basson Audio!");
@@ -23,15 +23,16 @@ namespace BassoonSimpleExample
                 string path = args[0];
                 using (Sound snd = new Sound(path))
                 {
+                    // Lower volume first
                     snd.Volume = 0.2f;
                     Console.WriteLine();
 
                     // Play it!
                     snd.Play();
                     if (snd.IsPlaying)
-                        Console.WriteLine($"Playing \"{path}\"...");
+                        Console.WriteLine($"Playing \"{path}\" @ 20% volume...");
 
-                    // hold until the user quicks
+                    // hold until the user quits
                     Console.WriteLine("[Press enter to quit the program]");
                     Console.ReadLine();
                 }

@@ -40,9 +40,12 @@ namespace Sinewave
             System.UInt32 frameCount,
             ref StreamCallbackTimeInfo timeInfo,
             StreamCallbackFlags statusFlags,
-            SinewaveData data
+            IntPtr userDataPtr
         )
         {
+            // Retrive the sinewave object
+            SinewaveData data = Stream.GetUserData<SinewaveData>(userDataPtr);
+
             unsafe
             {
                 float *audio = (float *)output;
@@ -67,8 +70,11 @@ namespace Sinewave
         }
 
         // Print a message when done
-        public static void Finished(SinewaveData data) =>
+        public static void Finished(IntPtr userDataPtr)
+        {
+            SinewaveData data = Stream.GetUserData<SinewaveData>(userDataPtr);
             Console.WriteLine($"Stream Completed: {data.message}");
+        }
 
 
         static void Main(string[] args)
@@ -99,7 +105,7 @@ namespace Sinewave
             oParams.hostApiSpecificStreamInfo = IntPtr.Zero;
 
             // Try to setup a stream
-            Stream<SinewaveData> audio = new Stream<SinewaveData>(
+            Stream audio = new Stream(
                 null, oParams,
                 SampleRate,
                 FramesPerBuffer,
