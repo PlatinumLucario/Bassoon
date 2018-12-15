@@ -32,7 +32,7 @@ namespace Bassoon
         /// </summary>
         internal bool playingBack = false;
 
-        private Stream<Sound> stream;
+        private Stream stream;
 
         /// <summary>
         /// How much data needs to be read when doing a playback
@@ -63,7 +63,7 @@ namespace Bassoon
             oParams.channelCount = audioFile.Info.channels;
 
             // Create the stream
-            stream = new Stream<Sound>(
+            stream = new Stream(
                 null,
                 oParams,
                 audioFile.Info.samplerate,
@@ -217,10 +217,11 @@ namespace Bassoon
             System.UInt32 frameCount,
             ref StreamCallbackTimeInfo timeInfo,
             StreamCallbackFlags statusFlags,
-            Sound data
+            IntPtr dataPtr
         )
         {
             // NOTE: make sure there are no malloc in this block, as it can cause issues.
+            Sound data = Stream.GetUserData<Sound>(dataPtr);
 
             long numRead = 0;
             unsafe

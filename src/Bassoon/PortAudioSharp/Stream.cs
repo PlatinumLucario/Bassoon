@@ -14,7 +14,7 @@ namespace PortAudioSharp
             double sampleRate,
             System.UInt32 framesPerBuffer,
             StreamFlags streamFlags,
-            Callback streamCallback,                    // `PaStreamCallback *`
+            IntPtr streamCallback,                      // `PaStreamCallback *`
             IntPtr userData                             // `void *`
         );
 
@@ -46,7 +46,7 @@ namespace PortAudioSharp
         [return: MarshalAs(UnmanagedType.I4)]
         public static extern ErrorCode Pa_SetStreamFinishedCallback(
             IntPtr stream,                                                  // `PaStream *`
-            FinishedCallback streamFinishedCallback
+            IntPtr streamFinishedCallback                                   // `PaStreamFinishedCallback *`
         );
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
@@ -94,16 +94,16 @@ namespace PortAudioSharp
     /// Pa_StartStream, Pa_StopStream, Pa_AbortStream, Pa_IsStreamActive,
     /// Pa_GetStreamTime, Pa_GetStreamCpuLoad
     /// </summary>
-    public class Stream<UserData> : IDisposable
+    public class Stream : IDisposable
     {
         // Clean & manually managed data
         private bool disposed = false;
-        private IntPtr streamHandle = IntPtr.Zero;      // `Stream *`
+        private IntPtr streamPtr = IntPtr.Zero;      // `Stream *`
         private GCHandle userDataHandle;
 
-        // Userfriendly callbacks
-        private Callback streamCallback = null;
-        private FinishedCallback finishedCallback = null;
+        // Callback structures
+        private _NativeInterfacingCallback<Callback> streamCallback = null;
+        private _NativeInterfacingCallback<FinishedCallback> finishedCallback = null;
 
         /// <summary>
         /// The input paramaters for this stream, if any
@@ -164,6 +164,9 @@ namespace PortAudioSharp
         /// function. It could for example, contain a pointer to instance data necessary
         /// for processing the audio buffers. This parameter is ignored if streamCallback
         /// is NULL.
+        ///   NOTE: userData will no longer be automatically GC'd normally by C#.  The cleanup
+        ///         of that will be handled by this class upon `Dipose()` or deletion. You (the
+        ///         programmer), shouldn't have to worry about this.
         ///
         /// @return
         /// Upon success Pa_OpenStream() returns paNoError and places a pointer to a
@@ -180,13 +183,17 @@ namespace PortAudioSharp
             double sampleRate,
             System.UInt32 framesPerBuffer,
             StreamFlags streamFlags,
-            Callback cb,
-            UserData userData
+            Callback callback,
+            object userData
         )
         {
-            // Set some important data
-            streamCallback = cb;
+            // Setup the steam's callback
+            streamCallback = new _NativeInterfacingCallback<Callback>(callback);
+
+            // Take control of the userdata object
             userDataHandle = GCHandle.Alloc(userData);
+
+            // Set the ins and the outs
             inputParameters = inParams;
             outputParameters = outParams;
 
@@ -206,13 +213,13 @@ namespace PortAudioSharp
 
             // Open the stream
             ErrorCode ec = Native.Pa_OpenStream(
-                out streamHandle,
+                out streamPtr,
                 inParamsPtr,
                 outParamsPtr,
                 sampleRate,
                 framesPerBuffer,
                 streamFlags,
-                stream,
+                streamCallback.Ptr,
                 GCHandle.ToIntPtr(userDataHandle)
             );
             if (ec != ErrorCode.NoError)
@@ -255,6 +262,9 @@ namespace PortAudioSharp
             // Free Unmanaged resources
             Close();
             userDataHandle.Free();
+            streamCallback.Free();
+            if (finishedCallback != null)
+                finishedCallback.Free();
 
             disposed = true;
         }
@@ -265,40 +275,41 @@ namespace PortAudioSharp
         /// </summary>
         public void SetFinishedCallback(FinishedCallback fcb)
         {
-            finishedCallback = fcb;
+            finishedCallback = new _NativeInterfacingCallback<FinishedCallback>(fcb);
 
-            ErrorCode ec = Native.Pa_SetStreamFinishedCallback(streamHandle, finished);
+            // TODO what happens if a callback is already set?  Find out and make the necessary adjustments
+            ErrorCode ec = Native.Pa_SetStreamFinishedCallback(streamPtr, finishedCallback.Ptr);
             if (ec != ErrorCode.NoError)
                 throw new PortAudioException(ec, "Error setting finished callback for PortAudio Stream");
         }
 
         #region Native callback wrappers
-        /// <summary>
-        /// internal callback Wrapper to give the programmer more typesafe callbacks
-        /// </summary>
-        private StreamCallbackResult stream(
-            IntPtr input, IntPtr output,
-            System.UInt32 frameCount,
-            ref StreamCallbackTimeInfo timeInfo,
-            StreamCallbackFlags statusFlags,
-            IntPtr userData
-        )
-        {
-            return streamCallback.Invoke(
-                input, output,
-                frameCount,
-                ref timeInfo,
-                statusFlags,
-                (UserData)GCHandle.FromIntPtr(userData).Target
-            );
-        }
+//        /// <summary>
+//        /// internal callback Wrapper to give the programmer more typesafe callbacks
+//        /// </summary>
+//        private StreamCallbackResult stream(
+//            IntPtr input, IntPtr output,
+//            System.UInt32 frameCount,
+//            ref StreamCallbackTimeInfo timeInfo,
+//            StreamCallbackFlags statusFlags,
+//            IntPtr userData
+//        )
+//        {
+//            return streamCallback.Invoke(
+//                input, output,
+//                frameCount,
+//                ref timeInfo,
+//                statusFlags,
+//                (UserData)GCHandle.FromIntPtr(userData).Target
+//            );
+//        }
 
-        /// <summary>
-        /// internal callback Wrapper to give the programmer more typesafe callbacks
-        /// </summary>
-        /// <param name="userData"></param>
-        private void finished(IntPtr userData) =>
-            finishedCallback.Invoke((UserData)GCHandle.FromIntPtr(userData).Target);
+//        /// <summary>
+//        /// internal callback Wrapper to give the programmer more typesafe callbacks
+//        /// </summary>
+//        /// <param name="userData"></param>
+//        private void finished(IntPtr userData) =>
+//            finishedCallback.Invoke((UserData)GCHandle.FromIntPtr(userData).Target);
         #endregion // Native callback wrappers
 
         #region Operations
@@ -309,15 +320,15 @@ namespace PortAudioSharp
         public void Close()
         {
             // Did we already clean up?
-            if (streamHandle == IntPtr.Zero)
+            if (streamPtr == IntPtr.Zero)
                 return;
 
-            ErrorCode ec = Native.Pa_CloseStream(streamHandle);
+            ErrorCode ec = Native.Pa_CloseStream(streamPtr);
             if (ec != ErrorCode.NoError)
                 throw new PortAudioException(ec, "Error closing PortAudio Stream");
 
             // Reset the handle, since we've cleane dup
-            streamHandle = IntPtr.Zero;
+            streamPtr = IntPtr.Zero;
         }
 
         /// <summary>
@@ -325,7 +336,7 @@ namespace PortAudioSharp
         /// </summary>
         public void Start()
         {
-            ErrorCode ec = Native.Pa_StartStream(streamHandle);
+            ErrorCode ec = Native.Pa_StartStream(streamPtr);
             if (ec != ErrorCode.NoError)
                 throw new PortAudioException(ec, "Error starting PortAudio Stream");
         }
@@ -336,7 +347,7 @@ namespace PortAudioSharp
         /// </summary>
         public void Stop()
         {
-            ErrorCode ec = Native.Pa_StopStream(streamHandle);
+            ErrorCode ec = Native.Pa_StopStream(streamPtr);
             if (ec != ErrorCode.NoError)
                 throw new PortAudioException(ec, "Error stopping PortAudio Stream");
         }
@@ -347,7 +358,7 @@ namespace PortAudioSharp
         /// </summary>
         public void Abort()
         {
-            ErrorCode ec = Native.Pa_AbortStream(streamHandle);
+            ErrorCode ec = Native.Pa_AbortStream(streamPtr);
             if (ec != ErrorCode.NoError)
                 throw new PortAudioException(ec, "Error aborting PortAudio Stream");
         }
@@ -371,7 +382,7 @@ namespace PortAudioSharp
         {
             get
             {
-                ErrorCode ec = Native.Pa_IsStreamStopped(streamHandle);
+                ErrorCode ec = Native.Pa_IsStreamStopped(streamPtr);
 
                 // Yes, No, or wat?
                 if ((int)ec == 1)
@@ -401,7 +412,7 @@ namespace PortAudioSharp
         {
             get
             {
-                ErrorCode ec = Native.Pa_IsStreamActive(streamHandle);
+                ErrorCode ec = Native.Pa_IsStreamActive(streamPtr);
 
                 // Yes, No, or wat?
                 if ((int)ec == 1)
@@ -432,7 +443,7 @@ namespace PortAudioSharp
         /// </summary>
         public double CpuLoad
         {
-            get => Native.Pa_GetStreamCpuLoad(streamHandle);
+            get => Native.Pa_GetStreamCpuLoad(streamPtr);
         }
         #endregion Properties
 
@@ -486,6 +497,8 @@ namespace PortAudioSharp
         ///
         /// @param userData The value of a user supplied pointer passed to
         /// Pa_OpenStream() intended for storing synthesis data etc.
+        ///   NOTE: In the implementing callback, you can use the `GetUserData()` method to
+        ///         retrive the actual object.
         ///
         /// @return
         /// The stream callback should return one of the values in the
@@ -511,7 +524,7 @@ namespace PortAudioSharp
             System.UInt32 frameCount,
             ref StreamCallbackTimeInfo timeInfo,        // Originally `const PaStreamCallbackTimeInfo*`
             StreamCallbackFlags statusFlags,
-            UserData userData                           // Orignially `void *`
+            IntPtr userDataPtr                          // Orignially `void *`
         );
 
         /// <summary>
@@ -526,12 +539,77 @@ namespace PortAudioSharp
         /// has been played.
         ///
         /// @param userData The userData parameter supplied to Pa_OpenStream()
+        ///   NOTE: In the implementing callback, you can use the `GetUserData()` method to
+        ///         retrive the actual object.
         ///
         /// @see Pa_SetStreamFinishedCallback
         /// </summary>
         public delegate void FinishedCallback(
-            UserData userData                         // Originally `void *`
+            IntPtr userDataPtr                          // Originally `void *`
         );
         #endregion // Callbacks
+
+        /// <summary>
+        /// This function will retrive the `userData` of the stream from it's pointer.
+        ///
+        /// This is meant to be used by the callbacks for `Callback` and `FinishedCallback`, and
+        /// their `userDataPtr`.
+        /// </summary>
+        /// <param name="userDataPtr"></param>
+        /// <typeparam name="UD">The the of data was that put into the stream</typeparam>
+        /// <returns></returns>
+        public static UD GetUserData<UD>(IntPtr userDataPtr) =>
+            (UD)GCHandle.FromIntPtr(userDataPtr).Target;
+
+
+        /// <summary>
+        /// This is an internal structure to aid with C# Callbacks that interface with P/Invoke functions.
+        ///
+        /// The constructor, the `Free()` method, and the `Ptr` property are all that you can use, and are
+        /// the most important parts.
+        /// </summary>
+        /// <typeparam name="CB">Callback</typeparam>
+        private class _NativeInterfacingCallback<CB>
+        {
+            /// <summary>
+            /// The callback itself (needs to be a delegate)
+            /// </summary>
+            private CB callback;
+
+            /// <summary>
+            /// GC Handle to the callback
+            /// </summary>
+            private GCHandle handle;
+
+            /// <summary>
+            /// Get the pointer to where the function/delegate lives in memory
+            /// </summary>
+            public IntPtr Ptr { get; private set; } = IntPtr.Zero;
+
+            /// <summary>
+            /// Setup the datastructure.
+            ///
+            /// When done with it, don't forget to call the Free() method.
+            /// </summary>
+            /// <param name="cb"></param>
+            public _NativeInterfacingCallback(CB cb)
+            {
+                // Make sure that the type set is a delegate
+                if (!(cb is Delegate))
+                    throw new ArgumentException("_NativeInterfacingCallback<CB> only works with delegates", "cb");
+
+                callback = cb;
+                handle = GCHandle.Alloc(cb);
+                Ptr = Marshal.GetFunctionPointerForDelegate<CB>(cb);
+            }
+
+            /// <summary>
+            /// Mannually clean up memory
+            /// </summary>
+            public void Free()
+            {
+                handle.Free();
+            }
+        }
     }
 }

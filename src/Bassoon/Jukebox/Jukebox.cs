@@ -17,24 +17,27 @@ namespace Jukebox
     /// </summary>
     class Jukebox : Gtk.Window
     {
+        #region From the Glade file
         // Helps you pick a file
-        [UI] private FileChooserButton audioFileChooserButton;
+        [UI] private FileChooserButton audioFileChooserButton = null;
 
-        // Volume constrol widgets
-        [UI] private Label volumeLevelLabel;
-        [UI] private Scale volumeSlider;
-        [UI] private Adjustment volumeAdj;
+        // Volume control widgets
+        [UI] private Label volumeLevelLabel = null;
+        [UI] private Scale volumeSlider = null;
+        [UI] private Adjustment volumeAdj = null;
 
         // Playback Widgets
-        [UI] private Label playbackTimeLabel;
-        [UI] private Scale playbackSlider;
-        [UI] private Adjustment playbackAdj;
-        [UI] private ToggleButton playButton;
-        [UI] private Button rewindButton;
+        [UI] private Label playbackTimeLabel = null;
+        [UI] private Scale playbackSlider = null;
+        [UI] private Adjustment playbackAdj = null;
+        [UI] private ToggleButton playButton = null;
+        [UI] private Button rewindButton = null;
 
         // Label to display info to the user
-        [UI] private Label statusLabel;
+        [UI] private Label statusLabel = null;
+        #endregion // From the Glade file
 
+        #region Playback data
         /// <summary>
         /// Currently loaded audiofile (used as a same guard)
         /// </summary>
@@ -51,11 +54,15 @@ namespace Jukebox
         private float volume = 1;
 
         /// <summary>
+        /// Flag for if we're moving the slider (for playback)
+        /// </summary>
+        private bool movingPlaybackSlider = false;
+
+        /// <summary>
         /// Actual audio object, for playback and whatnot
         /// </summary>
         private Sound audio = null;
-
-        private bool movingPlaybackSlider = false;
+        #endregion // Playback data
 
 
         /// <summary>
@@ -144,7 +151,9 @@ namespace Jukebox
         }
 
         /// <summary>
-        /// Perform a callback, but in the Gtk Thread
+        /// Perform a callback, but in the Gtk Thread.
+        ///
+        /// This should be used when setting data/elements that live in the GUI
         /// </summary>
         private void gtkDo(EventHandler thing) =>
             Gtk.Application.Invoke(thing);
@@ -276,11 +285,11 @@ namespace Jukebox
         }
         #endregion // Widget callbacks
 
-
         /// <summary>
         /// This function runs in the Gtk GUI thread, as a timeout (about 20 times a second)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>if `true`, this function will run again.  if `false`, then it won't, until
+        /// it has been kicked off by `Glib.Timeout()`</returns>
         private bool checkPlayback()
         {
             // We need to have an audio file
