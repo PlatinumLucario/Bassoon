@@ -48,6 +48,11 @@ Developing
 TODO: double check steps on OS X & Windows
 TODO: requirements (e.g. C compiler, CMake, GNU tools?)
 
+- Common requirements: CMake
+- Windows: You'll need MSYS2 installed, along with the the `mingw-w64-x86_64-toolchain` package installed
+
+
+
 1. Get & build the native libraries.  You only need to do this once (unless you
    remove everything).
    
