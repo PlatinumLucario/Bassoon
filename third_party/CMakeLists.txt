@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.0)
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 set(THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR})
-message(STATUS ${THIRD_PARTY_DIR})
 
 
 # Build Portaudio
@@ -15,6 +14,7 @@ ExternalProject_Add(portaudio
                       --enable-shared
                       --disable-static
                       --with-pic
+                      --disable-rpath
                       --disable-mac-universal
     BUILD_IN_SOURCE 1
 )
@@ -32,6 +32,7 @@ ExternalProject_Add(ogg
                 --enable-shared
                 --disable-static
                 --with-pic
+                --disable-rpath
     BUILD_IN_SOURCE 1
 )
 
@@ -45,6 +46,7 @@ ExternalProject_Add(vorbis
                 --enable-shared
                 --disable-static
                 --with-pic
+                --disable-rpath
     BUILD_IN_SOURCE 1
 )
 
@@ -58,6 +60,7 @@ ExternalProject_Add(flac
                 --enable-shared
                 --disable-static
                 --with-pic
+                --disable-rpath
                 --disable-xmms-plugin
     BUILD_IN_SOURCE 1
 )
@@ -75,6 +78,20 @@ ExternalProject_Add(libsndfile
                 --enable-shared
                 --disable-static
                 --with-pic
+                --disable-rpath
     BUILD_IN_SOURCE 1
 )
 add_dependencies(libsndfile ogg vorbis flac)
+
+
+# Target to signify everything has been built
+add_custom_target(all_native_libs_built ALL
+                  DEPENDS portaudio libsndfile ogg vorbis flac)
+
+
+if(WIN32 OR MINGW OR CYGWIN OR MSYS)
+    # Fix the location of the windows DLLs
+    add_custom_command(TARGET all_native_libs_built
+                       POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -P win_dll_fixup.cmake ${THIRD_PARTY_DIR})
+endif()
