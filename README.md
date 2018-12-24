@@ -45,11 +45,9 @@ Help Wanted
 Developing
 ----------
 
-TODO: double check steps on OS X & Windows
-TODO: requirements (e.g. C compiler, CMake, GNU tools?)
-
-- Common requirements: CMake
+- Common requirements: CMake, GCC (or a compatible C compiler), GNU autotools, pkg-config, .NET Core runtime
 - Windows: You'll need MSYS2 installed, along with the the `mingw-w64-x86_64-toolchain` package installed
+  - Make sure your version of `gcc` is at least 8.x.  I was having compile errors with earlier releases.
 
 
 
@@ -62,5 +60,6 @@ TODO: requirements (e.g. C compiler, CMake, GNU tools?)
    make
    ```
 
-1. Set the environment.  C# (.NET) needs to be able to find the native libraries.
+2. Set the environment.  C# (.NET) needs to be able to find the native libraries.
    - On Linux & OS X: `source set_dev_env.sh`
+   - Windows: TODO add a windows batch script?  `set_dev_env.sh` can also be used w/ MSYS2 bash
