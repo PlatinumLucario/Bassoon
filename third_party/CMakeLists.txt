@@ -49,6 +49,7 @@ ExternalProject_Add(vorbis
                 --disable-rpath
     BUILD_IN_SOURCE 1
 )
+add_dependencies(vorbis ogg)
 
 # And FLAC 3rd
 ExternalProject_Add(flac
