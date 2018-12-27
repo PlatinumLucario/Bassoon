@@ -13,12 +13,8 @@ set(BIN_DIR ${THIRD_PARTY_DIR}/bin)
 set(LIB_DIR ${THIRD_PARTY_DIR}/lib)
 
 # Copy
-file(INSTALL ${BIN_DIR}/libogg-0.dll
-             ${BIN_DIR}/libvorbis-0.dll
-             ${BIN_DIR}/libFLAC-8.dll
-             ${BIN_DIR}/libsndfile-1.dll
-             ${BIN_DIR}/libportaudio-2.dll
-     DESTINATION ${LIB_DIR})
+file(GLOB WIN_DLLS ${BIN_DIR}/*.dll)
+file(INSTALL ${WIN_DLLS} DESTINATION ${LIB_DIR})
 
 # Rename
 file(RENAME ${LIB_DIR}/libsndfile-1.dll   ${LIB_DIR}/sndfile.dll)
