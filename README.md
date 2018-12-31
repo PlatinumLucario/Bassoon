@@ -6,7 +6,7 @@ A simple C#/.NET API to load & play audio files.
 
 
 Sub-Projects
-
+------------
 
 These are all found in `src/Bassoon/`
 
@@ -39,12 +39,16 @@ Help Wanted
 -----------
 
 - Audio Recording. This should be possible, it would be nice
+  - This also includes being able to save audio, it's fully possible with libsndfile,
+    but I have yet to tinker with that
 - NuGet packaging
 - Documentation fixups
   - Including have the Doxygen docs built automatically, and then published on GitLab pages
 - Adding a "pan audio" feature
+  - Being able to place the audio in a 3D environment would be cool too
 - Fade-in/fade-out feature
 - Some sort of "playlist" object/class/feature
+- A logo
 
 
 Developing
