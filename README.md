@@ -55,6 +55,7 @@ Developing
   - CMake
   - Make
   - GCC (or a compatible C compiler)
+  - Python (it's a libsndfile requirement)
   - GNU autotools
   - pkg-config
   - .NET Core runtime
