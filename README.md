@@ -6,7 +6,7 @@ A simple C#/.NET API to load & play audio files.
 
 
 Sub-Projects
-------------
+
 
 These are all found in `src/Bassoon/`
 
@@ -30,6 +30,8 @@ Current Limitations
 
 - `libsndfile` doesn't support `.mp3` reading (due to patent concerns), so it
   isn't supported at the moment.  It should be added soon enough to `Bassoon`
+  - IIRC, the patents did expire, so it's possible that MP3 decoding may be added
+    to libsndfile in the near future.
 
 
 
@@ -39,13 +41,23 @@ Help Wanted
 - Audio Recording. This should be possible, it would be nice
 - NuGet packaging
 - Documentation fixups
-  - Including have the Doxygen docs built automatically
+  - Including have the Doxygen docs built automatically, and then published on GitLab pages
+- Adding a "pan audio" feature
+- Fade-in/fade-out feature
+- Some sort of "playlist" object/class/feature
 
 
 Developing
 ----------
 
-- Common requirements: CMake, GCC (or a compatible C compiler), GNU autotools, pkg-config, .NET Core runtime
+- These are the common requirements.  I'd recommend getting them from a package manager (e.g. Homebrew on OS X, and
+  MSYS2 on Windows):
+  - CMake
+  - Make
+  - GCC (or a compatible C compiler)
+  - GNU autotools
+  - pkg-config
+  - .NET Core runtime
 - Windows: You'll need MSYS2 installed, along with the the `mingw-w64-x86_64-toolchain` package installed
   - Make sure your version of `gcc` is at least 8.x.  I was having compile errors with earlier releases.
 
@@ -53,7 +65,7 @@ Developing
 
 1. Get & build the native libraries.  You only need to do this once (unless you
    remove everything).
-   
+
    ```bash
    cd third_party
    cmake .
