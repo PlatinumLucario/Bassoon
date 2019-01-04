@@ -1,7 +1,24 @@
 Bassoon - Cross Platform .NET (Core) Audio Playback
 ===================================================
 
-A simple C#/.NET API to load & play audio files.
+A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, 
+OGG, Vorbis, FLAC, and more (see `libsndfile`), on Windows, OS X, and Linux.
+
+A short example:
+
+```csharp
+using Bassoon;
+/// ...
+
+using (BassonEngine be = new BassoonEngine())
+{
+    Sound snd = new Sound("Kenny Loggins - I'm Free (Heaven Helps the Man).ogg");
+    snd.Volume = 0.85f;         // Play at 85% volume
+    snd.Play();
+
+    /// ...
+}
+```
 
 
 
@@ -44,8 +61,9 @@ Help Wanted
   - This also includes being able to save audio, it's fully possible with libsndfile,
     but I have yet to tinker with that
 - Documentation fixups
-  - Including have the Doxygen docs built automatically, and then published on GitLab pages
+  - Better styling & CSS
   - Mainpage
+  - Including have the Doxygen docs built automatically, and then published on GitLab pages
 - Adding a "pan audio" feature
   - Being able to place the audio in a 3D environment would be cool too
 - Fade-in/fade-out feature
@@ -85,3 +103,13 @@ Developing
    ```bash
    source set_dev_env.h
    ```
+
+
+Licensing
+---------
+
+Bassoon (e.g. the contents of `src/`) are available under the Apache License 2.0.  The entire text
+can be found in `LICENSE.txt`.  Bassoon does use five other external C libraries; Xiph's libOGG,
+libVorbis, & libFLAC, libsndfile, and PortAudio.  These are all availble under various FLOSS
+licenses.  Please check their respective websites (or source code) for details.
+libvorbis, 
