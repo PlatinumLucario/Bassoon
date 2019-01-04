@@ -38,12 +38,14 @@ Current Limitations
 Help Wanted
 -----------
 
+- NuGet packaging
+  - I'd like to have this library on NuGet, along w/ the required native libraries.
 - Audio Recording. This should be possible, it would be nice
   - This also includes being able to save audio, it's fully possible with libsndfile,
     but I have yet to tinker with that
-- NuGet packaging
 - Documentation fixups
   - Including have the Doxygen docs built automatically, and then published on GitLab pages
+  - Mainpage
 - Adding a "pan audio" feature
   - Being able to place the audio in a 3D environment would be cool too
 - Fade-in/fade-out feature
@@ -77,6 +79,9 @@ Developing
    make
    ```
 
-2. Set the environment.  C# (.NET) needs to be able to find the native libraries.
-   - On Linux & OS X: `source set_dev_env.sh`
-   - Windows: TODO add a windows batch script?  `set_dev_env.sh` can also be used w/ MSYS2 bash
+2. Set the environment.  C# (.NET) needs to be able to find the native libraries, and this needs to be done
+   before you launc hthe .NET runtime:
+
+   ```bash
+   source set_dev_env.h
+   ```
