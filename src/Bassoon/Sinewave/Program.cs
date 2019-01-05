@@ -7,6 +7,10 @@ using PortAudioSharp;
 
 namespace Sinewave
 {
+    /// <summary>
+    /// This is example usage of the PortAudioSharp bindings, adapted from the native PortuAudio's own Sinewave
+    /// exmaple.
+    /// </summary>
     class Program
     {
         public const int NumSeconds = 5;
