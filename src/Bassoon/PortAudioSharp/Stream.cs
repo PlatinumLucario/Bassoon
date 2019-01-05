@@ -31,16 +31,6 @@ namespace PortAudioSharp
             IntPtr userData                             // Orignially `void *`
         );
 
-//PaError Pa_OpenDefaultStream( PaStream** stream,
-//                              int numInputChannels,
-//                              int numOutputChannels,
-//                              PaSampleFormat sampleFormat,
-//                              double sampleRate,
-//                              unsigned long framesPerBuffer,
-//                              PaStreamCallback *streamCallback,
-//                              void *userData );
-//
-
         [DllImport(PortAudioDLL)]
         [return: MarshalAs(UnmanagedType.I4)]
         public static extern ErrorCode Pa_CloseStream(IntPtr stream);       // `PaStream *`
@@ -285,35 +275,6 @@ namespace PortAudioSharp
             if (ec != ErrorCode.NoError)
                 throw new PortAudioException(ec, "Error setting finished callback for PortAudio Stream");
         }
-
-        #region Native callback wrappers
-//        /// <summary>
-//        /// internal callback Wrapper to give the programmer more typesafe callbacks
-//        /// </summary>
-//        private StreamCallbackResult stream(
-//            IntPtr input, IntPtr output,
-//            System.UInt32 frameCount,
-//            ref StreamCallbackTimeInfo timeInfo,
-//            StreamCallbackFlags statusFlags,
-//            IntPtr userData
-//        )
-//        {
-//            return streamCallback.Invoke(
-//                input, output,
-//                frameCount,
-//                ref timeInfo,
-//                statusFlags,
-//                (UserData)GCHandle.FromIntPtr(userData).Target
-//            );
-//        }
-
-//        /// <summary>
-//        /// internal callback Wrapper to give the programmer more typesafe callbacks
-//        /// </summary>
-//        /// <param name="userData"></param>
-//        private void finished(IntPtr userData) =>
-//            finishedCallback.Invoke((UserData)GCHandle.FromIntPtr(userData).Target);
-        #endregion // Native callback wrappers
 
         #region Operations
         /// <summary>
