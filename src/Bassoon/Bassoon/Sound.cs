@@ -251,7 +251,6 @@ namespace Bassoon
             data.cursor += numRead;
 
             // Did we hit the end?
-            // TODO is `frameCount` here wrong, or do we want to use `data.finalFrameSize`?
             if (data.playingBack && (numRead < frameCount))
             {
                 // Stop playback, and reset to the beginning
