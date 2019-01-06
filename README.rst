@@ -149,11 +149,11 @@ libvorbis,
 
 
 
-.. |libsndfile_badge| image:: https://badge.fury.io/nu/libsndfileSharp.svg
-.. _libsndfile_badge: https://badge.fury.io/nu/libsndfileSharp
+.. |libsndfileSharp_badge| image:: https://badge.fury.io/nu/libsndfileSharp.svg
+.. _libsndfileSharp_badge: https://badge.fury.io/nu/libsndfileSharp
 
-.. |PortAudio_badge| image:: https://badge.fury.io/nu/PortAudioSharp.svg
-.. _PortAudio_badge: https://badge.fury.io/nu/PortAudioSharp
+.. |PortAudioSharp_badge| image:: https://badge.fury.io/nu/PortAudioSharp.svg
+.. _PortAudioSharp_badge: https://badge.fury.io/nu/PortAudioSharp
 
 .. |Bassoon_badge| image:: https://badge.fury.io/nu/Bassoon.svg
 .. _Bassoon_badge: https://badge.fury.io/nu/Bassoon
