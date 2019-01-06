@@ -1,3 +1,6 @@
+// License:     APL 2.0
+// Author:      Benjamin N. Summerton <https://16bpp.net>
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -190,10 +193,6 @@ namespace libsndfileSharp
         public string Genre         { get => GetString(Str.Genre); }
         #endregion // Metadata
 
-/* Functions for reading and writing the data chunk in terms of items.
-** Otherwise similar to above.
-** All of these read/write function return number of items read/written.
-*/
         /// <summary>
         /// Read a chunk of data in terms of items (using Pointers)
         ///

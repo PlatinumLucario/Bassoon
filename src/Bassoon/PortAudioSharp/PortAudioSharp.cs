@@ -1,3 +1,6 @@
+// License:     APL 2.0
+// Author:      Benjamin N. Summerton <https://16bpp.net>
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -178,19 +181,5 @@ namespace PortAudioSharp
         /// </summary>
         public static DeviceInfo GetDeviceInfo(DeviceIndex device) =>
             Marshal.PtrToStructure<DeviceInfo>(Native.Pa_GetDeviceInfo(device));
-
-/*
-        /// <summary>
-        /// Put the caller to sleep for at least 'msec' milliseconds. This function is
-        /// provided only as a convenience for authors of portable code (such as the tests
-        /// and examples in the PortAudio distribution.)
-        ///
-        /// The function may sleep longer than requested so don't rely on this for accurate
-        /// musical timing.
-        /// </summary>
-        /// <param name="ms">Milliseconds to sleep for</param>
-        public static void Sleep(int ms) =>
-            Native.Pa_Sleep(ms);
-*/
     }
 }

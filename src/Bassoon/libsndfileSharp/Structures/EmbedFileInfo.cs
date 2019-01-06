@@ -1,3 +1,6 @@
+// License:     APL 2.0
+// Author:      Benjamin N. Summerton <https://16bpp.net>
+
 using System.Runtime.InteropServices;
 
 using sf_count_t = System.Int64;

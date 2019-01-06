@@ -1,3 +1,6 @@
+// License:     APL 2.0
+// Author:      Benjamin N. Summerton <https://16bpp.net>
+
 using System;
 using System.Runtime.InteropServices;
 using libsndfileSharp;
@@ -248,7 +251,6 @@ namespace Bassoon
             data.cursor += numRead;
 
             // Did we hit the end?
-            // TODO is `frameCount` here wrong, or do we want to use `data.finalFrameSize`?
             if (data.playingBack && (numRead < frameCount))
             {
                 // Stop playback, and reset to the beginning

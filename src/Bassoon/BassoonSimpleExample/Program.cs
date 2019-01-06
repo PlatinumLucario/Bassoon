@@ -1,4 +1,7 @@
-﻿using System;
+﻿// License:     APL 2.0
+// Author:      Benjamin N. Summerton <https://16bpp.net>
+
+using System;
 using Bassoon;
 
 namespace BassoonSimpleExample
@@ -7,7 +10,8 @@ namespace BassoonSimpleExample
     {
         static void Main(string[] args)
         {
-            // Doesn't really need to be in `using` block, but here for `IDisposable` testing
+            // Doesn't really need to be in `using` block, but it's highly recommended as it handles automatic
+            // research cleanup for you.
             using (BassoonEngine be = new BassoonEngine())
             {
                 Console.WriteLine("Basson Audio!");

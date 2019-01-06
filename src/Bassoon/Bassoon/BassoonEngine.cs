@@ -1,3 +1,6 @@
+// License:     APL 2.0
+// Author:      Benjamin N. Summerton <https://16bpp.net>
+
 using System;
 using PortAudioSharp;
 
@@ -31,6 +34,14 @@ namespace Bassoon
         /// <value>`null` if BassonEngine hasn't been setup yet.  Else, it should always contain something</value>
         public static BassoonEngine Instance { get; private set;} = null;
 
+        /// <summary>
+        /// Calling this will setup Bassoon for audio playback.  It is meant to be a singleton, so creating a second
+        /// a `BassoonEngine` (if one is already running), it will throw an Exception.
+        ///
+        /// Note that if you have cleaned up your previous instance of this object, you can create a second one.
+        /// It's recommended that you use/create this in a `using() { }` block.  See the `BassoonSimpleExample`
+        /// program to see how it's done.
+        /// </summary>
         public BassoonEngine()
         {
             // First check if the singleton is setup

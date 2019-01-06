@@ -1,4 +1,7 @@
-﻿using System;
+﻿// License:     APL 2.0
+// Author:      Benjamin N. Summerton <https://16bpp.net>
+
+using System;
 using libsndfileSharp;
 
 namespace FileInfo
