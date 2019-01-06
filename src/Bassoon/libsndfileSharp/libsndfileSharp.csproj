@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
+
+    <!-- NuGet Packaging info -->
+    <Title>libsndfileSharp</Title>
+    <Description>C# friendly bindings to libsndfile</Description>
+    <Version>0.1</Version>
+    <Authors>Benjamin N. Summerton</Authors>
+    <IncludeSource>true</IncludeSource>
+    <Copyright>Copyright 2019</Copyright>
+    <PackageId>libsndfileSharp</PackageId>
+    <PackageLicense>Apache-2.0</PackageLicense>
+    <PackageProjectUrl>https://gitlab.com/define-private-public/Bassoon</PackageProjectUrl>
+    <PackageTags>audio music decoding cross platform wav ogg vorbis flac aiff libsndfile sndfile</PackageTags>
+    <PackageReleaseNotes>Initial release, allows for simple decoding from audio files.</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
