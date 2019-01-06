@@ -4,8 +4,18 @@
 Bassoon - Cross Platform .NET (Core) Audio Playback
 ###################################################
 
-A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, 
-OGG, Vorbis, FLAC, and more (see ``libsndfile``), on Windows, OS X, and Linux.
+* ``libsndfileSharp`` |libsndfileSharp_badge|_
+* ``PortAudioSharp`` |PortAudioSharp_badge|_
+* ``Bassoon`` |Bassoon_badge|_
+
+
+A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, OGG, Vorbis, FLAC, and more (see
+``libsndfile``'s official documentation), on Windows, OS X, and Linux.
+
+Right now, native the native libraries aren't packaged on NuGet, so you will need to build them yourself.  See the
+`Developing`_ section for how to do this.
+
+
 
 ***************
 A Short Example
@@ -88,6 +98,7 @@ Help Wanted
 * A logo
 
 
+
 **********
 Developing
 **********
@@ -109,8 +120,7 @@ Developing
 
 
 
-1. Get & build the native libraries.  You only need to do this once (unless you
-   remove everything).
+1. Get & build the native libraries.  You only need to do this once (unless you remove everything).
 
    .. code-block:: bash
 
@@ -119,11 +129,12 @@ Developing
       make
 
 2. Set the environment.  C# (.NET) needs to be able to find the native libraries, and this needs to be done
-   before you launc hthe .NET runtime:
+   before you launch the .NET runtime:
 
    .. code-block:: bash
 
       source set_dev_env.h
+
 
 
 *********
@@ -136,3 +147,13 @@ libVorbis, & libFLAC, libsndfile, and PortAudio.  These are all availble under v
 licenses.  Please check their respective websites (or source code) for details.
 libvorbis, 
 
+
+
+.. |libsndfile_badge| image:: https://badge.fury.io/nu/libsndfileSharp.svg
+.. _libsndfile_badge: https://badge.fury.io/nu/libsndfileSharp
+
+.. |PortAudio_badge| image:: https://badge.fury.io/nu/PortAudioSharp.svg
+.. _PortAudio_badge: https://badge.fury.io/nu/PortAudioSharp
+
+.. |Bassoon_badge| image:: https://badge.fury.io/nu/Bassoon.svg
+.. _Bassoon_badge: https://badge.fury.io/nu/Bassoon

@@ -7,9 +7,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-  </PropertyGroup>
 
-  <PropertyGroup>
+    <!-- NuGet Packaging info -->
+    <Title>Bassoon</Title>
+    <Description>Cross Platform .NET Core audio playback library</Description>
+    <Version>1.0</Version>
+    <Authors>Benjamin N. Summerton</Authors>
+    <IncludeSource>true</IncludeSource>
+    <Copyright>Copyright 2019</Copyright>
+    <PackageId>Bassoon</PackageId>
+    <PackageLicense>Apache-2.0</PackageLicense>
+    <PackageProjectUrl>https://gitlab.com/define-private-public/Bassoon</PackageProjectUrl>
+    <PackageTags>audio music playback cross platform Bassoon</PackageTags>
+    <PackageReleaseNotes>Initial release, allows for simple audio loading &amp; playback.  Tested and works on Linux, Windows, and OS X.  To build the necessary native libraries, checkout the the repo and see the README for instructions.</PackageReleaseNotes>
+
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
