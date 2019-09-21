@@ -125,7 +125,7 @@ Developing
    .. code-block:: bash
 
       cd third_party
-      cmake .            # On Windows/MSYS2 (if using GCC) you'll need to do `cmake -G 'Unix Makefiles'` instead
+      cmake .            # On Windows/MSYS2 (if using GCC) you'll need to do `cmake . -G 'Unix Makefiles'` instead
       make
 
 2. Set the environment.  C# (.NET) needs to be able to find the native libraries, and this needs to be done
