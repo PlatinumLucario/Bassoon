@@ -145,7 +145,6 @@ Bassoon (e.g. the contents of ``src/``) are available under the Apache License 2
 can be found in ``LICENSE.txt``.  Bassoon does use five other external C libraries; Xiph's libOGG,
 libVorbis, & libFLAC, libsndfile, and PortAudio.  These are all availble under various FLOSS
 licenses.  Please check their respective websites (or source code) for details.
-libvorbis, 
 
 
 
