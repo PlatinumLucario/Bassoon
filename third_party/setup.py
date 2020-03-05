@@ -19,7 +19,6 @@ dlls = []
 dll_renaming_rules = [] # list of two-element tuples
 dll_src_dir =   ''
 
-# TODO document this part in a readme
 # Ensure we have access to the VCPKG executable, should be first argument
 vcpkg_dir = os.path.abspath(os.environ.get('VCPKG_DIR'))
 if not vcpkg_dir:
@@ -86,22 +85,10 @@ pathlib.Path('lib').mkdir(exist_ok=True)
 proc = subprocess.Popen([vcpkg_exe, 'install', *deps, '--overlay-triplets=dynamic-triplets'])
 proc.wait()
 
-## export the deps
-#proc = subprocess.Popen([vcpkg_exe, 'export', *deps, '--raw'])
-#proc.wait()
-#
-## Get the directory where the DLLs were exported to
-#vcpkg_export_dir = list(filter(lambda x: x.startswith('vcpkg-export-'), os.listdir(vcpkg_dir)))[0]
-#vcpkg_export_dir = os.path.join(vcpkg_dir, vcpkg_export_dir)
-
 # Now get the dlls that we really want
 for dll in dlls:
-#    src = os.path.join(vcpkg_export_dir, dll_src_dir, dll)
     src = os.path.join(vcpkg_dir, dll_src_dir, dll)
     shutil.copy(src, 'lib/')
-
-# Remove the export dir from VCPKG
-#shutil.rmtree(vcpkg_export_dir)
 
 # Fix names
 for (src_name, dst_name) in dll_renaming_rules:
