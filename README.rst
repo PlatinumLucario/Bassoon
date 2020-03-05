@@ -9,11 +9,12 @@ Bassoon - Cross Platform .NET (Core) Audio Playback
 * ``Bassoon`` |Bassoon_badge|_
 
 
-A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, OGG, Vorbis, FLAC, and more (see
-``libsndfile``'s official documentation), on Windows, OS X, and Linux.
+A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, OGG, Vorbis, FLAC,
+and more (see ``libsndfile``'s official documentation), on Windows, OS X, and Linux.
 
-Right now, native the native libraries aren't packaged on NuGet, so you will need to build them yourself.  See the
-`Developing`_ section for how to do this.
+Right now, the native libraries aren't packaged on NuGet, so you will need to build them yourself.
+Though soon enough they will be up on Nuget.  In the meantime, look at the `Developing`_ section
+for how to get the native libraries for your platform.
 
 
 
@@ -103,37 +104,43 @@ Help Wanted
 Developing
 **********
 
-* These are the common requirements.  I'd recommend getting them from a package manager (e.g. Homebrew on OS X, and
-  MSYS2 on Windows):
+Steps 1 & 2 only need to be run once.  After that, you can go ahead to step 3 any time you want to
+start working on the C# component of this project.
 
-  * CMake
-  * Make
-  * GCC (or a compatible C compiler)
-  * Python (it's a libsndfile requirement)
-  * GNU Autotools
-  * pkg-config
-  * .NET Core runtime
+You'll at least need some standard C/C++ compiler envrionment and Python 3 installed.  A note for
+windows is that an MSYS2 environment was used for development (i.e. Bash), but you should be also
+able to use a Powershell environment too; though that's undocumented.  I do recommend MSYS2/bash
+for Windows though.
 
-* Windows: You'll need MSYS2 installed, along with the the ``mingw-w64-x86_64-toolchain`` package installed
+1. Microsoft's `_Vcpkg` is what's used to build the native libraries.  It's pretty simple to get
+   setup.  In their ``README``, document follow their ``Quick Start`` section.  All you need to do
+   is have it bootstrapped and you should be fine (no need to do ``integrate install`` if you don't
+   want to bake you dev environment.
 
-  * Make sure your version of ``gcc`` is at least 8.x.  I was having compile errors with earlier releases.
-
-
-
-1. Get & build the native libraries.  You only need to do this once (unless you remove everything).
+2. Run the third party setup script.  Make sure to set the envrionment variable ``VCPKG_DIR`` to
+   where you installed Vcpkg.
 
    .. code-block:: bash
 
-      cd third_party
-      cmake .            # On Windows/MSYS2 (if using GCC) you'll need to do `cmake . -G 'Unix Makefiles'` instead
-      make
+      cd third_party/
+      export VCPKG_DIR=<Vcpkg install dir>      # e.g. export VCPKG_DIR=~/vcpkg
+      python3 setup.py
 
-2. Set the environment.  C# (.NET) needs to be able to find the native libraries, and this needs to be done
-   before you launch the .NET runtime:
+   Now the setup script will run; this could take a bit.  Once it's done, do ``ls lib/``.  There
+   should be some DLLs (or shared libraries) for your system.  Look to see that a ``sndfile`` and a
+   ``portaudio`` are found.
+
+3. Set the environment (from the root of the project directory).  C# (.NET) needs to be able to find
+   the native libraries, and this needs to be done before you launch the .NET runtime:
 
    .. code-block:: bash
 
       source set_dev_env.h
+
+You should be good to go at this point.  To test that everthing worked fine, I recommend trying to
+run the ``Jukebox`` sample.  Go into it's directory and do ``dotnet run``.  If it launches fine,
+then that means portaudio is working fine. And if you can load a song and play it back then you're
+good!
 
 
 
@@ -156,3 +163,5 @@ licenses.  Please check their respective websites (or source code) for details.
 
 .. |Bassoon_badge| image:: https://badge.fury.io/nu/Bassoon.svg
 .. _Bassoon_badge: https://badge.fury.io/nu/Bassoon
+
+.. _Vcpkg: https://github.com/microsoft/vcpkg

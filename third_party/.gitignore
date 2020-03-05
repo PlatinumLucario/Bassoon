@@ -1,11 +1,1 @@
-build/
-include/
 lib/
-share/
-src/
-tmp/
-
-CMakeCache.txt
-CMakeFiles/
-Makefile
-cmake_install.cmake
