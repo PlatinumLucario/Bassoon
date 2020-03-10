@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
 
     <!-- NuGet Packaging info -->
     <Title>libsndfileSharp</Title>
@@ -16,5 +16,32 @@
     <PackageTags>audio music decoding cross platform wav ogg vorbis flac aiff libsndfile sndfile</PackageTags>
     <PackageReleaseNotes>Initial release, allows for simple decoding from audio files.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NativeLibraryManager" Version="1.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="libogg.so" />
+    <EmbeddedResource Include="libFLAC.so" />
+    <EmbeddedResource Include="libvorbis.so" />
+    <EmbeddedResource Include="libvorbisfile.so" />
+    <EmbeddedResource Include="libvorbisenc.so" />
+    <EmbeddedResource Include="libsndfile.so" />
+
+    <EmbeddedResource Include="libogg.dylib" />
+    <EmbeddedResource Include="libFLAC.dylib" />
+    <EmbeddedResource Include="libvorbis.dylib" />
+    <EmbeddedResource Include="libvorbisfile.dylib" />
+    <EmbeddedResource Include="libvorbisenc.dylib" />
+    <EmbeddedResource Include="libsndfile.dylib" />
+
+    <EmbeddedResource Include="ogg.dll" />
+    <EmbeddedResource Include="FLAC.dll" />
+    <EmbeddedResource Include="vorbis.dll" />
+    <EmbeddedResource Include="vorbisfile.dll" />
+    <EmbeddedResource Include="vorbisenc.dll" />
+    <EmbeddedResource Include="sndfile.dll" />
+  </ItemGroup>
 
 </Project>
