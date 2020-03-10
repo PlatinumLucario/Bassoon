@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
 
     <!-- NuGet Packaging info -->
     <Title>PortAudioSharp</Title>
@@ -16,5 +16,15 @@
     <PackageTags>audio music playback cross platform PortAudio port audio</PackageTags>
     <PackageReleaseNotes>Initial release, allows for simple playback.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NativeLibraryManager" Version="1.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="libportaudio.so" />
+    <EmbeddedResource Include="libportaudio.dylib" />
+    <EmbeddedResource Include="portaudio.dll" />
+  </ItemGroup>
 
 </Project>

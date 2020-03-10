@@ -2,7 +2,9 @@
 // Author:      Benjamin N. Summerton <https://16bpp.net>
 
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using NativeLibraryManager;
 
 using DeviceIndex = System.Int32;
 
@@ -92,6 +94,24 @@ namespace PortAudioSharp
         /// </summary>
         public static string GetErrorText(ErrorCode errorCode) =>
             Marshal.PtrToStringAnsi(Native.Pa_GetErrorText(errorCode));
+
+        /// <summary>
+        /// This is a function that's not found in the original PortAudio library.  Because of how the native libraries are
+        /// packaged, this function must be called before anything else with the package.  It loads the native shared library
+        /// (from an embedded resource) and makes it accessable.
+        /// </summary>
+        public static void LoadNativeLibrary()
+        {
+            // Extrat the the native library that has been embedded and load it up
+            ResourceAccessor accessor = new ResourceAccessor(Assembly.GetExecutingAssembly());
+            LibraryManager libManager = new LibraryManager(
+                Assembly.GetExecutingAssembly(),
+                new LibraryItem(Platform.Linux,   Bitness.x64, new LibraryFile("libportaudio.so",    accessor.Binary("libportaudio.so"))),
+                new LibraryItem(Platform.MacOs,   Bitness.x64, new LibraryFile("libportaudio.dylib", accessor.Binary("libportaudio.dylib"))),
+                new LibraryItem(Platform.Windows, Bitness.x64, new LibraryFile("portaudio.dll",      accessor.Binary("portaudio.dll")))
+            );
+            libManager.LoadNativeLibrary();
+        }
 
         /// <summary>
         /// Library initialization function - call this before using PortAudio.
