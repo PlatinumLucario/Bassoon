@@ -3,6 +3,7 @@
 
 using System;
 using PortAudioSharp;
+using libsndfileSharp;
 
 namespace Bassoon
 {
@@ -44,6 +45,10 @@ namespace Bassoon
         /// </summary>
         public BassoonEngine()
         {
+            // Load up the native libraries first
+            PortAudio.LoadNativeLibrary();
+            libsndfile.LoadNativeLibrary();
+
             // First check if the singleton is setup
             if (Instance != null)
                 throw new BassoonException("BassoonEngine is a singleton, and cannot be instantiated more than once");
