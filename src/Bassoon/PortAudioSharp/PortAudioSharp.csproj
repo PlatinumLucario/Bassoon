@@ -6,7 +6,7 @@
     <!-- NuGet Packaging info -->
     <Title>PortAudioSharp</Title>
     <Description>C# friendly bindings to PortAudio</Description>
-    <Version>0.1</Version>
+    <Version>0.2</Version>
     <Authors>Benjamin N. Summerton</Authors>
     <IncludeSource>true</IncludeSource>
     <Copyright>Copyright 2019</Copyright>
@@ -14,7 +14,7 @@
     <PackageLicense>Apache-2.0</PackageLicense>
     <PackageProjectUrl>https://gitlab.com/define-private-public/Bassoon</PackageProjectUrl>
     <PackageTags>audio music playback cross platform PortAudio port audio</PackageTags>
-    <PackageReleaseNotes>Initial release, allows for simple playback.</PackageReleaseNotes>
+    <PackageReleaseNotes>Native libraries now included in package</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
