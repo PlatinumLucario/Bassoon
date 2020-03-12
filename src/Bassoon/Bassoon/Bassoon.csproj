@@ -11,7 +11,7 @@
     <!-- NuGet Packaging info -->
     <Title>Bassoon</Title>
     <Description>Cross Platform .NET Core audio playback library</Description>
-    <Version>1.1</Version>
+    <Version>1.1.1</Version>
     <Authors>Benjamin N. Summerton</Authors>
     <IncludeSource>true</IncludeSource>
     <Copyright>Copyright 2019</Copyright>
