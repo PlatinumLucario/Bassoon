@@ -30,6 +30,9 @@ namespace libsndfileSharp
         /// </summary>
         public static void LoadNativeLibrary()
         {
+            /*
+                Commented out in development branch so `/third_party/lib` DLLs can be used instead
+
             // Extract the native libraries that have been embedded and load them up
             ResourceAccessor accessor = new ResourceAccessor(Assembly.GetExecutingAssembly());
             LibraryManager libManager = new LibraryManager(
@@ -60,6 +63,7 @@ namespace libsndfileSharp
                 )
             );
             libManager.LoadNativeLibrary();
+            */
         }
     }
 }

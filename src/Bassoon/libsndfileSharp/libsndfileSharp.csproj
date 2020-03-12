@@ -21,6 +21,7 @@
     <PackageReference Include="NativeLibraryManager" Version="1.0.18" />
   </ItemGroup>
 
+  <!-- Commented out in development branch so `/third_party/lib` DLLs can be used instead
   <ItemGroup>
     <EmbeddedResource Include="libogg.so" />
     <EmbeddedResource Include="libFLAC.so" />
@@ -43,5 +44,6 @@
     <EmbeddedResource Include="vorbisenc.dll" />
     <EmbeddedResource Include="sndfile.dll" />
   </ItemGroup>
+  -->
 
 </Project>

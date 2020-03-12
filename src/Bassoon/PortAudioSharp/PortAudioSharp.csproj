@@ -21,10 +21,12 @@
     <PackageReference Include="NativeLibraryManager" Version="1.0.18" />
   </ItemGroup>
 
+  <!-- Commented out in development branch so `/third_party/lib` DLLs can be used instead
   <ItemGroup>
     <EmbeddedResource Include="libportaudio.so" />
     <EmbeddedResource Include="libportaudio.dylib" />
     <EmbeddedResource Include="portaudio.dll" />
   </ItemGroup>
+  -->
 
 </Project>

@@ -102,6 +102,9 @@ namespace PortAudioSharp
         /// </summary>
         public static void LoadNativeLibrary()
         {
+            /*
+                Commented out in development branch so `/third_party/lib` DLLs can be used instead
+
             // Extrat the the native library that has been embedded and load it up
             ResourceAccessor accessor = new ResourceAccessor(Assembly.GetExecutingAssembly());
             LibraryManager libManager = new LibraryManager(
@@ -111,6 +114,7 @@ namespace PortAudioSharp
                 new LibraryItem(Platform.Windows, Bitness.x64, new LibraryFile("portaudio.dll",      accessor.Binary("portaudio.dll")))
             );
             libManager.LoadNativeLibrary();
+            */
         }
 
         /// <summary>
