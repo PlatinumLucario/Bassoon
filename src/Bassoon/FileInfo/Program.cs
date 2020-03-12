@@ -10,6 +10,9 @@ namespace FileInfo
     {
         static void Main(string[] args)
         {
+            // Not originally present in the sndfile library, but required to call before using it
+            libsndfile.LoadNativeLibrary();
+
             Console.WriteLine("Hello libsndfile#!");
             Console.WriteLine($"Native library version: {libsndfile.Version()}");
 

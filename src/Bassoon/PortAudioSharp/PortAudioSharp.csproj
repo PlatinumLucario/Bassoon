@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
 
     <!-- NuGet Packaging info -->
     <Title>PortAudioSharp</Title>
     <Description>C# friendly bindings to PortAudio</Description>
-    <Version>0.1</Version>
+    <Version>0.2</Version>
     <Authors>Benjamin N. Summerton</Authors>
     <IncludeSource>true</IncludeSource>
     <Copyright>Copyright 2019</Copyright>
@@ -14,7 +14,17 @@
     <PackageLicense>Apache-2.0</PackageLicense>
     <PackageProjectUrl>https://gitlab.com/define-private-public/Bassoon</PackageProjectUrl>
     <PackageTags>audio music playback cross platform PortAudio port audio</PackageTags>
-    <PackageReleaseNotes>Initial release, allows for simple playback.</PackageReleaseNotes>
+    <PackageReleaseNotes>Native libraries now included in package</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NativeLibraryManager" Version="1.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="libportaudio.so" />
+    <EmbeddedResource Include="libportaudio.dylib" />
+    <EmbeddedResource Include="portaudio.dll" />
+  </ItemGroup>
 
 </Project>

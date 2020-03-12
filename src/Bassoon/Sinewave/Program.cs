@@ -86,6 +86,9 @@ namespace Sinewave
 
         static void Main(string[] args)
         {
+            // Not originally present in PortAudio library, but required to call before using it
+            PortAudio.LoadNativeLibrary();
+
             // Print info
             Console.WriteLine($"(PortAudio version no: {PortAudio.VersionInfo.versionText})");
             Console.WriteLine($"PortAudio Test: output sine wave. SR = {SampleRate}, BufSize = {FramesPerBuffer}");
