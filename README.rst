@@ -144,6 +144,37 @@ good!
 
 
 
+*********************
+Making NuGet Packages
+*********************
+
+I've tried to set this up so it's as simple as possible to make packages for NuGet, but it's a
+little bit inovled still.
+
+1. You will need to build the native libraries for each platform.  Collect them from each respective
+   system's ``/third_party/lib/`` output, and then put them on the computer where you want to build
+   the packages (I recommend on Linux).
+
+2. Switch to the branch ``release_nuget_packaging``.
+
+3. Look at the project files for ``PortAudioSharp.csproj`` and ``libsndfileSharp.csproj``.  At all
+   all of the ``<EmbeddedResource ...>`` tags, they will tell you want native library files need to
+   be places alongside each project.
+
+4. Go to the root directory of this project, and run the following commands:
+
+   .. code-block:: bash
+
+      source set_dev_env.sh
+      ./mk_nuget_packges.sh
+
+   If everthing went fine, that you should see the ``*.nupkg``'s right in the root directory.  If
+   not, you'll probably see some errors.  If they say "Error reading resource", that most likely
+   means that one of the projects wasn't able to find a native DLL.  Double check that you put them
+   all in their correct places.
+
+
+
 *********
 Licensing
 *********
