@@ -112,7 +112,7 @@ windows is that an MSYS2 environment was used for development (i.e. Bash), but y
 able to use a Powershell environment too; though that's undocumented.  I do recommend MSYS2/bash
 for Windows though.
 
-1. Microsoft's `_Vcpkg` is what's used to build the native libraries.  It's pretty simple to get
+1. Microsoft's _Vcpkg is what's used to build the native libraries.  It's pretty simple to get
    setup.  In their ``README``, document follow their ``Quick Start`` section.  All you need to do
    is have it bootstrapped and you should be fine (no need to do ``integrate install`` if you don't
    want to bake you dev environment.
