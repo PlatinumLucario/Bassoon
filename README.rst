@@ -16,6 +16,14 @@ Right now, the native libraries aren't packaged on NuGet, so you will need to bu
 Though soon enough they will be up on Nuget.  In the meantime, look at the `Developing`_ section
 for how to get the native libraries for your platform.
 
+Currently uses these versions of the native libraries:
+
+* ``libgg``       1.3.4
+* ``libflac``     1.3.3
+* ``libvorbis``   1.3.6
+* ``libsndfile``  1.0.29-8
+* ``portaudio``   2020-02-02
+
 
 
 ***************
