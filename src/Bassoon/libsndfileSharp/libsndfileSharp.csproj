@@ -6,7 +6,7 @@
     <!-- NuGet Packaging info -->
     <Title>libsndfileSharp</Title>
     <Description>C# friendly bindings to libsndfile</Description>
-    <Version>0.2</Version>
+    <Version>0.2.1</Version>
     <Authors>Benjamin N. Summerton</Authors>
     <IncludeSource>true</IncludeSource>
     <Copyright>Copyright 2019</Copyright>
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NativeLibraryManager" Version="1.0.18" />
+    <PackageReference Include="NativeLibraryManager" Version="1.0.23" />
   </ItemGroup>
 
   <!-- Commented out in development branch so `/third_party/lib` DLLs can be used instead
