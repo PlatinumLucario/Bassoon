@@ -34,10 +34,10 @@ If you're only targeting windows, then you don't need to pay attention to this. 
 you be using a cross platform library? :]
 
 At the moment of writing this (Bassoon v.1.1.2), this project uses the most excellent
-NativeLibraryManager_ (v1.0.23) to well, manage the native libraries.  When executing the ``dotnet
-run`` command, it will extract the native libraries to the directory you run from.  At the moment,
-you need to specify your current working directory as part of the dynamic library search path.  So
-this is the easiest thing to do:
+NativeLibraryManager_ (v1.0.23) to well, manage the native libraries.  When executing the
+``dotnet run`` command, it will extract the native libraries to the directory you run from.  At the
+moment, you need to specify your current working directory as part of the dynamic library search
+path.  So this is the easiest thing to do:
 
 .. code-block:: bash
 
