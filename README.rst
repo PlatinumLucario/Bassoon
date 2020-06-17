@@ -26,9 +26,35 @@ Currently uses these versions of the native libraries:
 
 
 
-***************
-A Short Example
-***************
+**************************************
+A Note About Running on Linux and OS X
+**************************************
+
+If you're only targeting windows, then you don't need to pay attention to this.  But then why would
+you be using a cross platform library? :]
+
+At the moment of writing this (Bassoon v.1.1.2), this project uses the most excellent
+NativeLibraryManager_ (v1.0.23) to well, manage the native libraries.  When executing the ``dotnet
+run`` command, it will extract the native libraries to the directory you run from.  At the moment,
+you need to specify your current working directory as part of the dynamic library search path.  So
+this is the easiest thing to do:
+
+.. code-block:: bash
+
+   # On Linux
+   $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`pwd`
+
+   # On OS X
+   $ export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:`pwd`
+
+
+Hopefully in a future release this little nuisance can be fixed.
+
+
+
+********************
+A Short Code Example
+********************
 
 .. code-block:: csharp
 
@@ -204,3 +230,4 @@ licenses.  Please check their respective websites (or source code) for details.
 .. _Bassoon_badge: https://badge.fury.io/nu/Bassoon
 
 .. _Vcpkg: https://github.com/microsoft/vcpkg
+.. _NativeLibraryManager: https://github.com/olegtarasov/NativeLibraryManager
