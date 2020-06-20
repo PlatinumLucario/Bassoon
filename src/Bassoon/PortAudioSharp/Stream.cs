@@ -534,6 +534,7 @@ namespace PortAudioSharp
         /// </summary>
         /// <typeparam name="CB">Callback</typeparam>
         private class _NativeInterfacingCallback<CB>
+            where CB : Delegate
         {
             /// <summary>
             /// The callback itself (needs to be a delegate)
@@ -558,11 +559,7 @@ namespace PortAudioSharp
             /// <param name="cb"></param>
             public _NativeInterfacingCallback(CB cb)
             {
-                // Make sure that the type set is a delegate
-                if (!(cb is Delegate))
-                    throw new ArgumentException("_NativeInterfacingCallback<CB> only works with delegates", "cb");
-
-                callback = cb;
+                callback = cb ?? throw new ArgumentNullException(nameof(cb));
                 handle = GCHandle.Alloc(cb);
                 Ptr = Marshal.GetFunctionPointerForDelegate<CB>(cb);
             }
