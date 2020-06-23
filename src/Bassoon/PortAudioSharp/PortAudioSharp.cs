@@ -104,14 +104,14 @@ namespace PortAudioSharp
         /// <summary>
         /// This is a function that's not found in the original PortAudio library.  Because of how the native libraries are
         /// packaged, this function must be called before anything else with the package.  It loads the native shared library
-        /// (from an embedded resource) and makes it accessable.
+        /// (from an embedded resource) and makes it accessible.
         /// </summary>
         public static void LoadNativeLibrary()
         {
             /*
                 Commented out in development branch so `/third_party/lib` DLLs can be used instead
 
-            // Extrat the the native library that has been embedded and load it up
+            // Extract the the native library that has been embedded and load it up
             ResourceAccessor accessor = new ResourceAccessor(Assembly.GetExecutingAssembly());
             LibraryManager libManager = new LibraryManager(
                 Assembly.GetExecutingAssembly(),
