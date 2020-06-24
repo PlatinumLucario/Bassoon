@@ -36,13 +36,13 @@ namespace PortAudioSharp
 
         [DllImport(PortAudioDLL)]
         public static extern DeviceIndex Pa_GetDefaultInputDevice();
-        
+
         [DllImport(PortAudioDLL)]
         public static extern IntPtr Pa_GetDeviceInfo(DeviceIndex device);   // Originally returns `const PaDeviceInfo *`
 
         [DllImport(PortAudioDLL)]
         public static extern DeviceIndex Pa_GetDeviceCount();
-        
+
         [DllImport(PortAudioDLL)]
         public static extern void Pa_Sleep(System.Int32 msec);
     }
@@ -206,7 +206,7 @@ namespace PortAudioSharp
         {
             get => Native.Pa_GetDefaultInputDevice();
         }
-        
+
         /// <summary>
         /// Retrieve a pointer to a PaDeviceInfo structure containing information
         /// about the specified device.
