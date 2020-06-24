@@ -99,13 +99,13 @@ namespace PortAudioSharp
         private _NativeInterfacingCallback<FinishedCallback> finishedCallback = null;
 
         /// <summary>
-        /// The input paramaters for this stream, if any
+        /// The input parameters for this stream, if any
         /// </summary>
         /// <value>will be `null` if the user never supplied any</value>
         public StreamParameters? inputParameters { get; private set; }
 
         /// <summary>
-        /// The output paramaters for this stream, if any
+        /// The output parameters for this stream, if any
         /// </summary>
         /// <value>will be `null` if the user never supplied any</value>
         public StreamParameters? outputParameters { get; private set; }
@@ -231,7 +231,7 @@ namespace PortAudioSharp
         }
 
         /// <summary>
-        /// Cleanup resoureces (for the IDisposable interface)
+        /// Cleanup resources (for the IDisposable interface)
         /// </summary>
         public void Dispose()
         {
@@ -264,7 +264,7 @@ namespace PortAudioSharp
         #endregion // Constructors & Cleanup
 
         /// <summary>
-        /// Set a callback to be triggred when the stream is done.
+        /// Set a callback to be triggered when the stream is done.
         /// </summary>
         public void SetFinishedCallback(FinishedCallback fcb)
         {
@@ -291,7 +291,7 @@ namespace PortAudioSharp
             if (ec != ErrorCode.NoError)
                 throw new PortAudioException(ec, "Error closing PortAudio Stream");
 
-            // Reset the handle, since we've cleane dup
+            // Reset the handle, since we've cleaned up
             streamPtr = IntPtr.Zero;
         }
 
@@ -514,13 +514,13 @@ namespace PortAudioSharp
         #endregion // Callbacks
 
         /// <summary>
-        /// This function will retrive the `userData` of the stream from it's pointer.
+        /// This function will retrieve the `userData` of the stream from it's pointer.
         ///
         /// This is meant to be used by the callbacks for `Callback` and `FinishedCallback`, and
         /// their `userDataPtr`.
         /// </summary>
         /// <param name="userDataPtr"></param>
-        /// <typeparam name="UD">The the of data was that put into the stream</typeparam>
+        /// <typeparam name="UD">The type of data that was put into the stream</typeparam>
         /// <returns></returns>
         public static UD GetUserData<UD>(IntPtr userDataPtr) =>
             (UD)GCHandle.FromIntPtr(userDataPtr).Target;
@@ -534,6 +534,7 @@ namespace PortAudioSharp
         /// </summary>
         /// <typeparam name="CB">Callback</typeparam>
         private class _NativeInterfacingCallback<CB>
+            where CB : Delegate
         {
             /// <summary>
             /// The callback itself (needs to be a delegate)
@@ -551,24 +552,20 @@ namespace PortAudioSharp
             public IntPtr Ptr { get; private set; } = IntPtr.Zero;
 
             /// <summary>
-            /// Setup the datastructure.
+            /// Setup the data structure.
             ///
             /// When done with it, don't forget to call the Free() method.
             /// </summary>
             /// <param name="cb"></param>
             public _NativeInterfacingCallback(CB cb)
             {
-                // Make sure that the type set is a delegate
-                if (!(cb is Delegate))
-                    throw new ArgumentException("_NativeInterfacingCallback<CB> only works with delegates", "cb");
-
-                callback = cb;
+                callback = cb ?? throw new ArgumentNullException(nameof(cb));
                 handle = GCHandle.Alloc(cb);
                 Ptr = Marshal.GetFunctionPointerForDelegate<CB>(cb);
             }
 
             /// <summary>
-            /// Mannually clean up memory
+            /// Manually clean up memory
             /// </summary>
             public void Free()
             {

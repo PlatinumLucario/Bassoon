@@ -35,8 +35,14 @@ namespace PortAudioSharp
         public static extern DeviceIndex Pa_GetDefaultOutputDevice();
 
         [DllImport(PortAudioDLL)]
+        public static extern DeviceIndex Pa_GetDefaultInputDevice();
+        
+        [DllImport(PortAudioDLL)]
         public static extern IntPtr Pa_GetDeviceInfo(DeviceIndex device);   // Originally returns `const PaDeviceInfo *`
 
+        [DllImport(PortAudioDLL)]
+        public static extern DeviceIndex Pa_GetDeviceCount();
+        
         [DllImport(PortAudioDLL)]
         public static extern void Pa_Sleep(System.Int32 msec);
     }
@@ -98,14 +104,14 @@ namespace PortAudioSharp
         /// <summary>
         /// This is a function that's not found in the original PortAudio library.  Because of how the native libraries are
         /// packaged, this function must be called before anything else with the package.  It loads the native shared library
-        /// (from an embedded resource) and makes it accessable.
+        /// (from an embedded resource) and makes it accessible.
         /// </summary>
         public static void LoadNativeLibrary()
         {
             /*
                 Commented out in development branch so `/third_party/lib` DLLs can be used instead
 
-            // Extrat the the native library that has been embedded and load it up
+            // Extract the the native library that has been embedded and load it up
             ResourceAccessor accessor = new ResourceAccessor(Assembly.GetExecutingAssembly());
             LibraryManager libManager = new LibraryManager(
                 Assembly.GetExecutingAssembly(),
@@ -190,6 +196,18 @@ namespace PortAudioSharp
         }
 
         /// <summary>
+        /// Retrieve the index of the default input device. The result can be
+        /// used in the inputDevice parameter to Pa_OpenStream().
+        ///
+        /// @return The default input device index for the default host API, or paNoDevice
+        /// if no default input device is available or an error was encountered.
+        /// </summary>
+        public static DeviceIndex DefaultInputDevice
+        {
+            get => Native.Pa_GetDefaultInputDevice();
+        }
+        
+        /// <summary>
         /// Retrieve a pointer to a PaDeviceInfo structure containing information
         /// about the specified device.
         /// @return A pointer to an immutable PaDeviceInfo structure. If the device
@@ -205,5 +223,18 @@ namespace PortAudioSharp
         /// </summary>
         public static DeviceInfo GetDeviceInfo(DeviceIndex device) =>
             Marshal.PtrToStructure<DeviceInfo>(Native.Pa_GetDeviceInfo(device));
+
+        /// <summary>
+        /// Retrieve the number of available devices. The number of available devices
+        /// may be zero.
+        ///
+        /// @return A non-negative value indicating the number of available devices
+        /// or, a PaErrorCode (which are always negative) if PortAudio is not initialized
+        /// or an error is encountered.
+        /// </summary>
+        public static DeviceIndex DeviceCount
+        {
+            get => Native.Pa_GetDeviceCount();
+        }
     }
 }
