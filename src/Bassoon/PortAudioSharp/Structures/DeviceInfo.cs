@@ -2,6 +2,7 @@
 // Author:      Benjamin N. Summerton <https://16bpp.net>
 
 using System;
+using System.Text;
 using System.Runtime.InteropServices;
 
 using HostApiIndex = System.Int32;
