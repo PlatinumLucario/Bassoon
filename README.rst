@@ -13,21 +13,34 @@ A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, 
 and more (see ``libsndfile``'s official documentation), on Windows, OS X, and Linux.
 
 Right now, the native libraries aren't packaged on NuGet, so you will need to build them yourself.
-Though soon enough they will be up on Nuget.  In the meantime, look at the `Developing`_ section
+Though soon enough they will be up on Nuget. In the meantime, look at the `Developing`_ section
 for how to get the native libraries for your platform.
 
 Currently uses these versions of the native libraries:
 
-* ``libgg``       1.3.4
-* ``libflac``     1.3.3
-* ``libvorbis``   1.3.6
-* ``libsndfile``  1.0.29-8
-* ``portaudio``   2020-02-02
+* ``libogg``      1.3.5#1
+* ``libflac``     1.4.3
+* ``libvorbis``   1.3.7#2
+* ``libopus``     1.4
+* ``libmp3lame    3.100#11
+* ``libmpg123     1.31.3#4
+* ``libsndfile``  1.2.2
+* ``portaudio``   19.7#5
+
+Also, do note that libsndfile relies on the following libraries:
+libogg, libflac, libvorbis, libopus, libmp3lame, and libmpg123.
+
+Same thing applies with libvorbis, which relies on:
+libvorbisenc, and libvorbisfile.
+
+And don't forget about libmpg123 too, which relies on:
+libout123, and libsyn123.
+
 
 
 
 **************************************
-A Note About Running on Linux and OS X
+A Note About Running on Linux and macOS
 **************************************
 
 If you're only targeting windows, then you don't need to pay attention to this.  But then why would
@@ -152,7 +165,9 @@ for Windows though.
    want to bake you dev environment.
 
 2. Run the third party setup script.  Make sure to set the envrionment variable ``VCPKG_DIR`` to
-   where you installed Vcpkg.
+   where you installed Vcpkg. If you are running Windows, you only need to set the environment variable
+   for ``VGPKG_DIR`` to the directory of your Vcpkg installation. However, if you're running Linux or
+   macOS, you will need to run the following commands in a terminal:
 
    .. code-block:: bash
 
@@ -192,8 +207,8 @@ little bit inovled still.
 2. Switch to the branch ``release_nuget_packaging``.
 
 3. Look at the project files for ``PortAudioSharp.csproj`` and ``libsndfileSharp.csproj``.  At all
-   all of the ``<EmbeddedResource ...>`` tags, they will tell you want native library files need to
-   be places alongside each project.
+   all of the ``<EmbeddedResource ...>`` tags, they will tell you what native library files need to
+   be placed alongside each project.
 
 4. Go to the root directory of this project, and run the following commands:
 

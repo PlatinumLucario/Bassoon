@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bassoon\Bassoon.csproj" />
+    <ProjectReference Include="..\..\Bassoon\Bassoon.csproj" />
   </ItemGroup>
 
 </Project>

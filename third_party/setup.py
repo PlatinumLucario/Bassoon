@@ -1,23 +1,29 @@
 #!/usr/bin/python3
 
-import os, sys
+import os, sys, platform
 import pathlib
 import subprocess
 import shutil
 
-# Some flags
+# Some OS flags
 is_windows = (sys.platform == 'win32') or (sys.platform == 'msys')
 is_linux = sys.platform == 'linux'
-is_osx = sys.platform == 'darwin'
+is_macos = sys.platform == 'darwin'
+
+# And CPU architecture flags
+is_x64 = (platform.machine() == 'x86_64') or (platform.machine() == 'amd64') or (platform.machine() == 'AMD64')
+is_aarch64 = (platform.machine() == 'arm64') or (platform.machine() == 'ARM64') or (platform.machine() == 'aarch64') or (platform.machine() == 'Aarch64') or (platform.machine() == 'AARCH64')
 
 deps = [
     'libsndfile',       # Also will grab libflac, libogg, and libvorbis for us
     'portaudio',
 ]
 vcpkg_exe = ''
-dlls = []
-dll_renaming_rules = [] # list of two-element tuples
-dll_src_dir =   ''
+libs_codecs = []
+libs_sndfile = []
+libs_portaudio = []
+lib_renaming_rules = [] # list of two-element tuples
+lib_src_dir =   ''
 
 # Ensure we have access to the VCPKG executable, should be first argument
 vcpkg_dir = os.path.abspath(os.environ.get('VCPKG_DIR'))
@@ -33,74 +39,218 @@ if is_windows:
     # If on windows, need to build the 64 bit version
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg.exe')
     deps = ['%s:x64-windows' % x for x in deps]
-    dll_src_dir = 'installed/x64-windows/bin/'
-    dlls = [
+    lib_src_dir = 'installed/x64-windows/bin/'
+    libs_codecs = [
         'FLAC.dll',
         'ogg.dll',
         'vorbis.dll',
         'vorbisenc.dll',
         'vorbisfile.dll',
-        'libsndfile-1.dll',
-        'portaudio.dll',
+        'opus.dll',
+        'libmp3lame.dll',
+        'mpg123.dll',
+        'out123.dll',
+        'syn123.dll',
     ]
-    dll_renaming_rules = [
-        ('libsndfile-1.dll', 'sndfile.dll')
+    libs_sndfile = [
+        'sndfile.dll',
+    ]
+    libs_portaudio = [
+        'portaudio.dll',
     ]
 elif is_linux:
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg')
-    dll_src_dir = 'installed/x64-linux/lib/'
-    dlls = [
+    lib_src_dir = 'installed/x64-linux/lib/'
+    libs_codecs = [
         'libFLAC.so',
         'libogg.so',
         'libvorbis.so',
         'libvorbisenc.so',
         'libvorbisfile.so',
+        'libopus.so',
+        'libmp3lame.so',
+        'libmpg123.so',
+        'libout123.so',
+        'libsyn123.so',
+    ]
+    libs_sndfile = [
         'libsndfile-shared.so',
+    ]
+    libs_portaudio = [
         'libportaudio.so',
     ]
-    dll_renaming_rules = [
+    lib_renaming_rules = [
         ('libsndfile-shared.so', 'libsndfile.so')
     ]
-elif is_osx:
+elif is_macos:
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg')
-    dll_src_dir = 'installed/x64-osx/lib/'
-    dlls = [
+    lib_src_dir = 'installed/x64-osx/lib/'
+    libs_codecs = [
         'libFLAC.dylib',
         'libogg.dylib',
         'libvorbis.dylib',
         'libvorbisenc.dylib',
         'libvorbisfile.dylib',
+        'libopus.dylib',
+        'libmp3lame.dylib',
+        'libmpg123.dylib',
+        'libout123.dylib',
+        'libsyn123.dylib',
+    ]
+    libs_sndfile = [
         'libsndfile-shared.dylib',
+    ]
+    libs_portaudio = [
         'libportaudio.dylib',
     ]
-    dll_renaming_rules = [
+    lib_renaming_rules = [
         ('libsndfile-shared.dylib', 'libsndfile.dylib')
     ]
 
 # First make sure the lib directory is there
-pathlib.Path('lib').mkdir(exist_ok=True)
-
+if is_windows:
+    if is_x64:
+        os.makedirs(pathlib.Path('lib/codecs/x64-windows'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/portaudio/x64-windows'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/sndfile/x64-windows'), exist_ok=True)
+    elif is_aarch64:
+        os.makedirs(pathlib.Path('lib/codecs/arm64-windows'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/portaudio/arm64-windows'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/sndfile/arm64-windows'), exist_ok=True)
+elif is_linux:
+    if is_x64:
+        os.makedirs(pathlib.Path('lib/codecs/x64-linux'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/portaudio/x64-linux'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/sndfile/x64-linux'), exist_ok=True)
+    elif is_aarch64:
+        os.makedirs(pathlib.Path('lib/codecs/arm64-linux'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/portaudio/arm64-linux'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/sndfile/arm64-linux'), exist_ok=True)
+elif is_macos:
+    if is_x64:
+        os.makedirs(pathlib.Path('lib/codecs/x64-macos'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/portaudio/x64-macos'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/sndfile/x64-macos'), exist_ok=True)
+    elif is_aarch64:
+        os.makedirs(pathlib.Path('lib/codecs/arm64-macos'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/portaudio/arm64-macos'), exist_ok=True)
+        os.makedirs(pathlib.Path('lib/sndfile/arm64-macos'), exist_ok=True)
 
 # Install the deps
 proc = subprocess.Popen([vcpkg_exe, 'install', *deps, '--overlay-triplets=dynamic-triplets'])
 proc.wait()
 
 # Now get the dlls that we really want
-for dll in dlls:
-    src = os.path.join(vcpkg_dir, dll_src_dir, dll)
-    shutil.copy(src, 'lib/')
+if is_windows:
+    if is_x64:
+        for lib in libs_codecs:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/codecs/x64-windows')
+        for lib in libs_sndfile:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/sndfile/x64-windows')
+        for lib in libs_portaudio:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/portaudio/x64-windows')
 
-# Fix names
-for (src_name, dst_name) in dll_renaming_rules:
-    os.rename(
-        os.path.join('lib/', src_name),
-        os.path.join('lib/', dst_name)
-    )
+        # Fix names
+        for (src_name, dst_name) in lib_renaming_rules:
+            os.rename(
+                os.path.join('lib/sndfile/x64-windows', src_name),
+                os.path.join('lib/sndfile/x64-windows', dst_name)
+            )
+    if is_aarch64:
+        for lib in libs_codecs:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/codecs/arm64-windows')
+        for lib in libs_sndfile:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/sndfile/arm64-windows')
+        for lib in libs_portaudio:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/portaudio/arm64-windows')
+
+        # Fix names
+        for (src_name, dst_name) in lib_renaming_rules:
+            os.rename(
+                os.path.join('lib/sndfile/arm64-windows', src_name),
+                os.path.join('lib/sndfile/arm64-windows', dst_name)
+            )
+elif is_linux:
+    if is_x64:
+        for lib in libs_codecs:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/codecs/x64-linux')
+        for lib in libs_sndfile:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/sndfile/x64-linux')
+        for lib in libs_portaudio:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/portaudio/x64-linux')
+
+        # Fix names
+        for (src_name, dst_name) in lib_renaming_rules:
+            os.rename(
+                os.path.join('lib/sndfile/x64-linux', src_name),
+                os.path.join('lib/sndfile/x64-linux', dst_name)
+            )
+    if is_aarch64:
+        for lib in libs_codecs:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/codecs/arm64-linux')
+        for lib in libs_sndfile:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/sndfile/arm64-linux')
+        for lib in libs_portaudio:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/portaudio/arm64-linux')
+
+        # Fix names
+        for (src_name, dst_name) in lib_renaming_rules:
+            os.rename(
+                os.path.join('lib/sndfile/arm64-linux', src_name),
+                os.path.join('lib/sndfile/arm64-linux', dst_name)
+            )
+elif is_macos:
+    if is_x64:
+        for lib in libs_codecs:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/codecs/x64-macos')
+        for lib in libs_sndfile:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/sndfile/x64-macos')
+        for lib in libs_portaudio:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/portaudio/x64-macos')
+
+        # Fix names
+        for (src_name, dst_name) in lib_renaming_rules:
+            os.rename(
+                os.path.join('lib/sndfile/x64-macos', src_name),
+                os.path.join('lib/sndfile/x64-macos', dst_name)
+            )
+    if is_aarch64:
+        for lib in libs_codecs:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/codecs/arm64-macos')
+        for lib in libs_sndfile:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/sndfile/arm64-macos')
+        for lib in libs_portaudio:
+            src = os.path.join(vcpkg_dir, lib_src_dir, lib)
+            shutil.copy(src, 'lib/portaudio/arm64-macos')
+
+        # Fix names
+        for (src_name, dst_name) in lib_renaming_rules:
+            os.rename(
+                os.path.join('lib/sndfile/arm64-macos', src_name),
+                os.path.join('lib/sndfile/arm64-macos', dst_name)
+            )
 
 
-# If on OS, we need to fix some issues with the dylibs
+# If on macOS, we need to fix some issues with the dylibs
 # namely the rpath stuff & dylib IDs,  it's a bit of a pain
-if is_osx:
+if is_macos:
     cmds = []
 
     # First fix Ids

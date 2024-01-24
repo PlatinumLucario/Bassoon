@@ -21,6 +21,45 @@
     <PackageReference Include="NativeLibraryManager" Version="1.0.23" />
   </ItemGroup>
 
+  <!-- Native libraries needed for building -->
+  <ItemGroup>
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libogg.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libFLAC.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libvorbis.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libvorbisfile.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libvorbisenc.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libopus.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libmp3lame.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libmpg123.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libout123.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-linux/libsyn123.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../../third_party/lib/sndfile/x64-linux/libsndfile.so" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libogg.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libFLAC.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libvorbis.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libvorbisfile.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libvorbisenc.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libopus.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libmp3lame.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libmpg123.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libout123.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-macos/libsyn123.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../../third_party/lib/sndfile/x64-macos/libsndfile.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/ogg.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/FLAC.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/vorbis.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/vorbisfile.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/vorbisenc.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/opus.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/libmp3lame.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/mpg123.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/out123.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/codecs/x64-windows/syn123.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../../third_party/lib/sndfile/x64-windows/sndfile.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
   <!-- Commented out in development branch so `/third_party/lib` DLLs can be used instead
   <ItemGroup>
     <EmbeddedResource Include="libogg.so" />
