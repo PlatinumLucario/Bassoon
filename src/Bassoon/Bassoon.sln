@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortAudioSharp", "PortAudio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sinewave", "Sinewave\Sinewave.csproj", "{7A3CB3B3-2D09-4077-A9B7-96866EB17690}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libsndfileSharp", "libsndfileSharp\libsndfileSharp.csproj", "{C1245131-C57E-4536-B8B7-BBC461728054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SndFileSharp", "SndFileSharp\SndFileSharp.csproj", "{C1245131-C57E-4536-B8B7-BBC461728054}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileInfo", "FileInfo\FileInfo.csproj", "{AB832025-291D-411D-A423-0F320FDDC361}"
 EndProject

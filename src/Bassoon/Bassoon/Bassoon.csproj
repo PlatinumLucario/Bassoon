@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\libsndfileSharp\libsndfileSharp.csproj" />
+    <ProjectReference Include="..\SndFileSharp\SndFileSharp.csproj" />
     <ProjectReference Include="..\PortAudioSharp\PortAudioSharp.csproj" />
   </ItemGroup>
 
