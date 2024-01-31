@@ -22,8 +22,8 @@ Currently uses these versions of the native libraries:
 * ``libflac``     1.4.3
 * ``libvorbis``   1.3.7#2
 * ``libopus``     1.4
-* ``libmp3lame    3.100#11
-* ``libmpg123     1.31.3#4
+* ``libmp3lame``  3.100#11
+* ``libmpg123``   1.31.3#4
 * ``libsndfile``  1.2.2
 * ``portaudio``   19.7#5
 
@@ -60,6 +60,7 @@ path.  So this is the easiest thing to do:
    # On OS X
    $ export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:`pwd`
 
+Also, you will need to install the ``libsndfile1-dev`` package, if you're running on Linux.
 
 Hopefully in a future release this little nuisance can be fixed.
 

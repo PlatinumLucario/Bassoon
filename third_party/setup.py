@@ -63,6 +63,7 @@ elif is_linux:
     lib_src_dir = 'installed/x64-linux/lib/'
     libs_codecs = [
         'libFLAC.so',
+        'libFLAC++.so',
         'libogg.so',
         'libvorbis.so',
         'libvorbisenc.so',
@@ -74,19 +75,17 @@ elif is_linux:
         'libsyn123.so',
     ]
     libs_sndfile = [
-        'libsndfile-shared.so',
+        'libsndfile.so',
     ]
     libs_portaudio = [
-        'libportaudio.so',
-    ]
-    lib_renaming_rules = [
-        ('libsndfile-shared.so', 'libsndfile.so')
+        'libportaudio.a',
     ]
 elif is_macos:
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg')
     lib_src_dir = 'installed/x64-osx/lib/'
     libs_codecs = [
         'libFLAC.dylib',
+        'libFLAC++.dylib',
         'libogg.dylib',
         'libvorbis.dylib',
         'libvorbisenc.dylib',
@@ -98,13 +97,10 @@ elif is_macos:
         'libsyn123.dylib',
     ]
     libs_sndfile = [
-        'libsndfile-shared.dylib',
+        'libsndfile.dylib',
     ]
     libs_portaudio = [
         'libportaudio.dylib',
-    ]
-    lib_renaming_rules = [
-        ('libsndfile-shared.dylib', 'libsndfile.dylib')
     ]
 
 # First make sure the lib directory is there
@@ -152,6 +148,7 @@ if is_windows:
         for lib in libs_portaudio:
             src = os.path.join(vcpkg_dir, lib_src_dir, lib)
             shutil.copy(src, 'lib/portaudio/x64-windows')
+        print("All libraries copied successfully!")
 
         # Fix names
         for (src_name, dst_name) in lib_renaming_rules:
@@ -169,6 +166,7 @@ if is_windows:
         for lib in libs_portaudio:
             src = os.path.join(vcpkg_dir, lib_src_dir, lib)
             shutil.copy(src, 'lib/portaudio/arm64-windows')
+        print("All libraries copied successfully!")
 
         # Fix names
         for (src_name, dst_name) in lib_renaming_rules:
@@ -187,6 +185,7 @@ elif is_linux:
         for lib in libs_portaudio:
             src = os.path.join(vcpkg_dir, lib_src_dir, lib)
             shutil.copy(src, 'lib/portaudio/x64-linux')
+        print("All libraries copied successfully!")
 
         # Fix names
         for (src_name, dst_name) in lib_renaming_rules:
@@ -204,6 +203,7 @@ elif is_linux:
         for lib in libs_portaudio:
             src = os.path.join(vcpkg_dir, lib_src_dir, lib)
             shutil.copy(src, 'lib/portaudio/arm64-linux')
+        print("All libraries copied successfully!")
 
         # Fix names
         for (src_name, dst_name) in lib_renaming_rules:
@@ -222,6 +222,7 @@ elif is_macos:
         for lib in libs_portaudio:
             src = os.path.join(vcpkg_dir, lib_src_dir, lib)
             shutil.copy(src, 'lib/portaudio/x64-macos')
+        print("All libraries copied successfully!")
 
         # Fix names
         for (src_name, dst_name) in lib_renaming_rules:
@@ -239,6 +240,7 @@ elif is_macos:
         for lib in libs_portaudio:
             src = os.path.join(vcpkg_dir, lib_src_dir, lib)
             shutil.copy(src, 'lib/portaudio/arm64-macos')
+        print("All libraries copied successfully!")
 
         # Fix names
         for (src_name, dst_name) in lib_renaming_rules:
@@ -254,13 +256,16 @@ if is_macos:
     cmds = []
 
     # First fix Ids
+    print("Fixing dylib IDs...")
     dylibs = ['ogg', 'vorbis', 'vorbisenc', 'vorbisfile', 'sndfile']
     for lib in dylibs:
         lib_filename = 'lib%s.dylib' % (lib)
         cmd = 'install_name_tool -id "@rpath/{0}" lib/{0}'.format(lib_filename)
         cmds.append(cmd)
+    print("Done!")
 
     # Now fix the references
+    print("Fixing rpath references...")
     changes = [
         # (old, new, [targets])
         ('ogg.0', 'ogg',                   ['FLAC', 'sndfile', 'vorbis', 'vorbisenc', 'vorbisfile']),
@@ -272,7 +277,11 @@ if is_macos:
         for t in targets:
             change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" lib/lib{2}.dylib'.format(o, n, t)
             cmds.append(change_cmd)
+    print("Done!")
 
     # Run the commands
+    print("Running neccessary commands...")
     [os.system(x) for x in cmds]
+    print("Done!")
+print("All neccessary tasks completed!")
 
