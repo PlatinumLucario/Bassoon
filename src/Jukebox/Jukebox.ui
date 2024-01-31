@@ -9,6 +9,8 @@
       <mime-type>audio/ogg</mime-type>
       <mime-type>audio/flac</mime-type>
       <mime-type>audio/vorbis</mime-type>
+      <mime-type>audio/opus</mime-type>
+      <mime-type>audio/wav</mime-type>
     </mime-types>
   </object>
   <object class="GtkFileChooserNative" id="AudioFileChooser">

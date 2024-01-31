@@ -110,6 +110,8 @@
 	(3,1,"GtkFileFilter",2,2,"audio/mpeg",1,None,None,None,None),
 	(3,1,"GtkFileFilter",2,3,"audio/ogg",1,None,None,None,None),
 	(3,1,"GtkFileFilter",2,4,"audio/flac",1,None,None,None,None),
-	(3,1,"GtkFileFilter",2,5,"audio/vorbis",1,None,None,None,None)
+	(3,1,"GtkFileFilter",2,5,"audio/vorbis",1,None,None,None,None),
+	(3,1,"GtkFileFilter",2,6,"audio/opus",1,None,None,None,None),
+	(3,1,"GtkFileFilter",2,7,"audio/wav",1,None,None,None,None)
   </object_data>
 </cambalache-project>
