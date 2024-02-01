@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (c)  2023  Xiaomi Corporation
 
+import os
 import argparse
 import re
 from pathlib import Path
@@ -34,6 +35,7 @@ def process_linux(s):
     environment = jinja2.Environment()
     template = environment.from_string(s)
     s = template.render(**d)
+    os.makedirs('./linux', exist_ok=True)
     with open("./linux/portaudio.runtime.csproj", "w") as f:
         f.write(s)
 
@@ -48,6 +50,7 @@ def process_macos(s):
     environment = jinja2.Environment()
     template = environment.from_string(s)
     s = template.render(**d)
+    os.makedirs('./macos', exist_ok=True)
     with open("./macos/portaudio.runtime.csproj", "w") as f:
         f.write(s)
 
@@ -62,6 +65,7 @@ def process_windows(s):
     environment = jinja2.Environment()
     template = environment.from_string(s)
     s = template.render(**d)
+    os.makedirs('./windows', exist_ok=True)
     with open("./windows/portaudio.runtime.csproj", "w") as f:
         f.write(s)
 
