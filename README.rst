@@ -13,19 +13,25 @@ A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, 
 and more (see ``libsndfile``'s official documentation), on Windows, OS X, and Linux.
 
 Right now, the native libraries aren't packaged on NuGet, so you will need to build them yourself.
-Though soon enough they will be up on Nuget. In the meantime, look at the `Developing`_ section
-for how to get the native libraries for your platform.
+Though soon enough they will be up on Nuget. Currently, the native libraries are included here in
+this repo, so the projects can be copied into the binary directory when building, without having
+to install VCPKG or msys2 in order to get them. However, do note that the dependencies for each
+operating system and architecture is not complete yet, however it would be great if anyone
+contributes the needed libraries.
+
+In the meantime, look at the `Developing`_ section for how to update the libraries or get the
+native libraries for your platform.
 
 Currently uses these versions of the native libraries:
 
-* ``libogg``      1.3.5#1
-* ``libflac``     1.4.3
-* ``libvorbis``   1.3.7#2
-* ``libopus``     1.4
-* ``libmp3lame``  3.100#11
-* ``libmpg123``   1.31.3#4
-* ``libsndfile``  1.2.2
-* ``portaudio``   19.7#5
+* ``libogg``         1.3.5#1
+* ``libflac``        1.4.3
+* ``libvorbis``      1.3.7#2
+* ``libopus``        1.4
+* ``libmp3lame``     3.100#11
+* ``libmpg123``      1.31.3#4
+* ``libsndfile``     1.2.2
+* ``libportaudio``   19.7#5
 
 Also, do note that libsndfile relies on the following libraries:
 libogg, libflac, libvorbis, libopus, libmp3lame, and libmpg123.
@@ -92,7 +98,7 @@ Sub-Projects
 
 These are all found in ``src/Bassoon/``
 
-* ``libsndfileSharp``: C# bindings to ``libsndfile``.  Only supports file reading
+* ``SndFileSharp``: C# bindings to ``libsndfile``.  Only supports file reading
   funcitonality at the moment.
 * ``FileInfo``: Example of how to use the ``libsndfile`` bindings, by printing
   out data about a loaded file
@@ -111,11 +117,9 @@ These are all found in ``src/Bassoon/``
 Current Limitations
 *******************
 
-* ``libsndfile`` doesn't support MP3 reading (due to patent concerns), so it
-  isn't supported at the moment.  It should be added soon enough to ``Bassoon``
-
-  * IIRC, the patents did expire, so it's possible that MP3 decoding may be added
-    to libsndfile in the near future.
+* Lacks the ability to pan audio (also called '3D Sound')
+* Can't record audio yet
+* Lacks fade-in/fade-out feature
 
 
 

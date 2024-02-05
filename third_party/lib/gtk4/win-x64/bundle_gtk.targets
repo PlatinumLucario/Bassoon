@@ -9,85 +9,58 @@
 
   <ItemGroup>
     <!-- Library link dependencies (run `ldd libgtk-4-1.dll | grep '\/mingw.*\.dll' -o`) -->
-    <GtkFile Include="$(MinGWBinFolder)\libappstream-5.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libbrotlicommon.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libbrotlidec.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libbz2-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libcairo-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libcairo-gobject-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libcairo-script-interpreter-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libcrypto-3-x64.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libcurl-4.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libdatrie-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libdeflate.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libepoxy-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libexpat-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libffi-8.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libfontconfig-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libfreetype-6.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libfribidi-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgcc_s_seh-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgdk_pixbuf-2.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgio-2.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libglib-2.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgmodule-2.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgobject-2.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgraphene-1.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgraphite2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libgtk-4-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libharfbuzz-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libiconv-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libidn2-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libintl-8.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libjbig-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libjpeg-8.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\liblerc.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\liblzma-5.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\liblzo2-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libnghttp2-14.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpango-1.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpangocairo-1.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpangoft2-1.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpangowin32-1.0-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpcre2-8-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpixman-1-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpng16-16.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libpsl-5.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libsharpyuv-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libssh2-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libssl-3-x64.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libstdc++-6.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libthai-0.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libtiff-6.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libunistring-5.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libwebp-7.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libwinpthread-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libxmlb-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libyaml-0-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libzstd.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\zlib1.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libbrotlidec.dll" TargetPath="libbrotlidec.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libbrotlicommon.dll" TargetPath="libbrotlicommon.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libcairo-2.dll" TargetPath="libcairo-2.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libcairo-gobject-2.dll" TargetPath="libcairo-gobject-2.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libcairo-script-interpreter-2.dll" TargetPath="libcairo-script-interpreter-2.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libdatrie-1.dll" TargetPath="libdatrie-1.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libdeflate.dll" TargetPath="libdeflate.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libepoxy-0.dll" TargetPath="libepoxy-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libexpat-1.dll" TargetPath="libexpat-1.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libffi-8.dll" TargetPath="libffi-8.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libfontconfig-1.dll" TargetPath="libfontconfig-1.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libfreetype-6.dll" TargetPath="libfreetype-6.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libfribidi-0.dll" TargetPath="libfribidi-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgcc_s_seh-1.dll" TargetPath="libgcc_s_seh-1.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgdk_pixbuf-2.0-0.dll" TargetPath="libgdk_pixbuf-2.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgio-2.0-0.dll" TargetPath="libgio-2.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libglib-2.0-0.dll" TargetPath="libglib-2.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgmodule-2.0-0.dll" TargetPath="libgmodule-2.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgobject-2.0-0.dll" TargetPath="libgobject-2.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgraphene-1.0-0.dll" TargetPath="libgraphene-1.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgraphite2.dll" TargetPath="libgraphite2.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libgtk-4-1.dll" TargetPath="libgtk-4-1.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libharfbuzz-0.dll" TargetPath="libharfbuzz-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libiconv-2.dll" TargetPath="libiconv-2.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libintl-8.dll" TargetPath="libintl-8.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libjbig-0.dll" TargetPath="libjbig-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libjpeg-8.dll" TargetPath="libjpeg-8.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libLerc.dll" TargetPath="libLerc.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\liblzma-5.dll" TargetPath="liblzma-5.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\liblzo2-2.dll" TargetPath="liblzo2-2.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libpango-1.0-0.dll" TargetPath="libpango-1.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libpangocairo-1.0-0.dll" TargetPath="libpangocairo-1.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libpangoft2-1.0-0.dll" TargetPath="libpangoft2-1.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libpangowin32-1.0-0.dll" TargetPath="libpangowin32-1.0-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libpcre2-8-0.dll" TargetPath="libpcre2-8-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libpixman-1-0.dll" TargetPath="libpixman-1-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libpng16-16.dll" TargetPath="libpng16-16.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libsharpyuv-0.dll" TargetPath="libsharpyuv-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libstdc++-6.dll" TargetPath="libstdc++-6.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libthai-0.dll" TargetPath="libthai-0.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libtiff-6.dll" TargetPath="libtiff-6.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libwebp-7.dll" TargetPath="libwebp-7.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libwinpthread-1.dll" TargetPath="libwinpthread-1.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\libzstd.dll" TargetPath="libzstd.dll" />
+    <GtkFile Include="$(MinGWBinFolder)\zlib1.dll" TargetPath="zlib1.dll" />
 
-    <!-- Additional dependencies for the SVG pixbuf loader. -->
-    <GtkFile Include="$(MinGWBinFolder)\libcharset-1.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\librsvg-2-2.dll" />
-    <GtkFile Include="$(MinGWBinFolder)\libxml2-2.dll" />
-
-    <GtkFile Include="$(MinGWBinFolder)\gdbus.exe" />
-    <GtkFile Include="$(MinGWBinFolder)\gdk-pixbuf-query-loaders.exe" />
-    <GtkFile Include="$(MinGWBinFolder)\gspawn-win64-helper.exe" />
-    <GtkFile Include="$(MinGWBinFolder)\gspawn-win64-helper-console.exe" />
-    <GtkFile Include="$(MinGWBinFolder)\gtk4-query-settings.exe" />
-    <GtkFile Include="$(MinGWBinFolder)\gtk4-update-icon-cache.exe" />
-
-    <GtkFile Include="$(MinGWFolder)\lib\gdk-pixbuf-2.0\**" LinkBase="..\lib\gdk-pixbuf-2.0" />
-    <GtkFile Include="$(MinGWFolder)\share\glib-2.0\schemas\**" LinkBase="..\share\glib-2.0\schemas" />
-    <GtkFile Include="$(MinGWFolder)\share\locale\**" LinkBase="..\share\locale" />
-    <GtkFile Include="$(MinGWFolder)\share\icons\Adwaita\**" LinkBase="..\share\icons\Adwaita" />
+    <!-- <GtkFile Include="$(MinGWFolder)\share\glib-2.0\schemas\**" LinkBase="..\share\glib-2.0\schemas" /> -->
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="@(GtkFile)">
+    <ContentWithTargetPath Include="@(GtkFile)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </ContentWithTargetPath>
   </ItemGroup>
 </Project>

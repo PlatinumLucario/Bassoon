@@ -118,17 +118,21 @@ namespace Jukebox
             // Initially, playback widgets are disabled
             EnablePlaybackWidgets(false);
             
+            // We need to create a new instance of any non-builder widgets
             PlaybackSliderClick = Gtk.GestureClick.New();
             VolumeSlider.Adjustment = Gtk.Adjustment.New(100, 0, 100, 1, 10, 0);
             PlaybackSlider.Adjustment = Gtk.Adjustment.New(0, 0, 100, 1, 10, 0);
+
+            // Then we need to add PlaybackSliderClick to the PlaybackSlider event controller
             PlaybackSlider.AddController(PlaybackSliderClick);
 
+            // Now we call the signals and connect them to each signal function
             AudioFileDialogButton.OnClicked += OnActivateFileDialog;
             VolumeSlider.OnValueChanged += OnVolumeSliderChanged;
             
             PlaybackSlider.OnChangeValue += OnPlaybackSliderChangeValue;
             PlaybackSlider.OnMoveSlider += OnPlaybackSliderDragged;
-            PlaybackSlider.Adjustment.OnValueChanged += OnPlaybackSliderValueChanged;
+            PlaybackSlider.OnValueChanged += OnPlaybackSliderValueChanged;
             PlaybackSliderClick.OnStopped += OnPlaybackSliderMouseUp;
             PlaybackSliderClick.OnCancel += OnPlaybackSliderMouseUp;
             PlaybackSliderClick.OnPressed += OnPlaybackSliderDragged;
@@ -148,12 +152,25 @@ namespace Jukebox
             // File Filters are made here
             AcceptableAudioFiles = FileFilter.New();
             AcceptableAudioFiles.SetName("Audio Files");
-            AcceptableAudioFiles.AddMimeType("audio/mpeg");
-            AcceptableAudioFiles.AddMimeType("audio/ogg");
-            AcceptableAudioFiles.AddMimeType("audio/flac");
-            AcceptableAudioFiles.AddMimeType("audio/vorbis");
-            AcceptableAudioFiles.AddMimeType("audio/opus");
-            AcceptableAudioFiles.AddMimeType("audio/wav");
+
+            // Since IFileDialog in Windows doesn't support MIME Types directly, file extension patterns need to be added
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                AcceptableAudioFiles.AddPattern("*.mp3");
+                AcceptableAudioFiles.AddPattern("*.ogg");
+                AcceptableAudioFiles.AddPattern("*.flac");
+                AcceptableAudioFiles.AddPattern("*.opus");
+                AcceptableAudioFiles.AddPattern("*.wav");
+            }
+            else
+            {
+                AcceptableAudioFiles.AddMimeType("audio/mpeg");
+                AcceptableAudioFiles.AddMimeType("audio/ogg");
+                AcceptableAudioFiles.AddMimeType("audio/flac");
+                AcceptableAudioFiles.AddMimeType("audio/vorbis");
+                AcceptableAudioFiles.AddMimeType("audio/opus");
+                AcceptableAudioFiles.AddMimeType("audio/wav");
+            }
 
             // Failsafe incase a Linux distribution uses a GTK4 library lower than 4.9
             if (Gtk.Functions.GetMinorVersion() >= 9) // Uses FileDialog if 4.9 or higher
@@ -396,14 +413,15 @@ namespace Jukebox
         /// </summary>
         private void OnPlaybackSliderMouseUp(object sender, EventArgs args)
         {
-            MovingPlaybackSlider = false;
-
             // We need an audio file to work with
             if (Audio == null)
                 return;
 
-            // Set cursor
-            Audio.Cursor = (float)PlaybackSliderSeconds();
+            // First, we check if slider is moving
+            if (MovingPlaybackSlider)
+                Audio.Cursor = (float)PlaybackSliderSeconds(); // Then we set the cursor
+
+            MovingPlaybackSlider = false;
         }
         #endregion // Widget callbacks
 
