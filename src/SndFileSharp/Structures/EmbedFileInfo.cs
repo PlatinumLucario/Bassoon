@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 using sf_count_t = System.Int64;
 
-namespace SndFileSharp
+namespace SndFile
 {
     /// <summary>
     /// Struct used to retrieve information about a file embedded within a

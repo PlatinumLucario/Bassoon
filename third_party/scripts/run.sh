@@ -1,35 +1,69 @@
 #!/usr/bin/env bash
 # Copyright (c)  2023  Xiaomi Corporation
+# Modified by Platinum Lucario (Davin Ockerby)
 
-set -ex
+set -ex # This sets the shell to end if there's an error (e), and print out command args during execution (x)
 
-mkdir -p macos linux windows all
-rm -rf packages
+rm -rf ../packages # The packages directory needs to be removed, so it can be made again
 
-cp -v ./libportaudio.dylib ./macos
-cp -v ./libportaudio.so ./linux
-cp -v ./portaudio.dll ./windows
+./setup_all.py # Updates and copies the libraries from VCPKG
 
-./generate.py
+./generate.py # Generates the project files, creates directories and copies the libraries
 
-pushd linux
-dotnet build -c Release
-dotnet pack -c Release -o ../../PortAudioSharp/packages
+# Build and pack projects
+# Linux x64
+pushd ../projects/portaudio/linux
+dotnet build -c Release portaudio.runtime.x64.csproj
+dotnet pack -c Release portaudio.runtime.x64.csproj -o ../../../packages
+popd
+pushd ../projects/sndfile/linux
+dotnet build -c Release sndfile.runtime.x64.csproj
+dotnet pack -c Release sndfile.runtime.x64.csproj -o ../../../packages
+popd
+# Linux ARM64
+pushd ../projects/portaudio/linux
+dotnet build -c Release portaudio.runtime.arm64.csproj
+dotnet pack -c Release portaudio.runtime.arm64.csproj -o ../../../packages
+popd
+pushd ../projects/sndfile/linux
+dotnet build -c Release sndfile.runtime.arm64.csproj
+dotnet pack -c Release sndfile.runtime.arm64.csproj -o ../../../packages
 popd
 
-pushd macos
-dotnet build -c Release
-dotnet pack -c Release -o ../../PortAudioSharp/packages
+# macOS x64
+pushd ../projects/portaudio/macos
+dotnet build -c Release portaudio.runtime.x64.csproj
+dotnet pack -c Release portaudio.runtime.csproj -o ../../../packages
+popd
+pushd ../projects/sndfile/macos
+dotnet build -c Release sndfile.runtime.x64.csproj
+dotnet pack -c Release sndfile.runtime.x64.csproj -o ../../../packages
+popd
+# macOS ARM64
+pushd ../projects/portaudio/macos
+dotnet build -c Release portaudio.runtime.arm64.csproj
+dotnet pack -c Release portaudio.runtime.csproj -o ../../../packages
+popd
+pushd ../projects/sndfile/macos
+dotnet build -c Release sndfile.runtime.arm64.csproj
+dotnet pack -c Release sndfile.runtime.arm64.csproj -o ../../../packages
 popd
 
-pushd windows
-dotnet build -c Release
-dotnet pack -c Release -o ../../PortAudioSharp/packages
+# Windows x64
+pushd ../projects/portaudio/windows
+dotnet build -c Release portaudio.runtime.x64.csproj
+dotnet pack -c Release portaudio.runtime.x64.csproj -o ../../../packages
 popd
-
-pushd ../PortAudioSharp
-dotnet build -c Release
-dotnet pack -c Release -o ./packages
+pushd ../projects/sndfile/windows
+dotnet build -c Release sndfile.runtime.x64.csproj
+dotnet pack -c Release sndfile.runtime.x64.csproj -o ../../../packages
 popd
-
-mv ../PortAudioSharp/packages .
+# Windows ARM64
+pushd ../projects/portaudio/windows
+dotnet build -c Release portaudio.runtime.arm64.csproj
+dotnet pack -c Release portaudio.runtime.arm64.csproj -o ../../../packages
+popd
+pushd ../projects/sndfile/windows
+dotnet build -c Release sndfile.runtime.arm64.csproj
+dotnet pack -c Release sndfile.runtime.arm64.csproj -o ../../../packages
+popd

@@ -9,8 +9,8 @@ using System.Threading;
 using GLib;
 using Gtk;
 using Gdk;
-using SndFileSharp;
-using PortAudioSharp;
+using SndFile;
+using PortAudio;
 using Bassoon;
 
 using UI = Gtk.ConnectAttribute;

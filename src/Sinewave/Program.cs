@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading;
-using PortAudioSharp;
+using PortAudio;
 
 namespace Sinewave
 {
@@ -87,10 +87,10 @@ namespace Sinewave
         static void Main(string[] args)
         {
             // Not originally present in PortAudio library, but required to call before using it
-            PortAudio.LoadNativeLibrary();
+            Pa.LoadNativeLibrary();
 
             // Print info
-            Console.WriteLine($"(PortAudio version no: {PortAudio.VersionInfo.versionText})");
+            Console.WriteLine($"(PortAudio version no: {Pa.VersionInfo.versionText})");
             Console.WriteLine($"PortAudio Test: output sine wave. SR = {SampleRate}, BufSize = {FramesPerBuffer}");
 
             // Setup data
@@ -98,20 +98,20 @@ namespace Sinewave
             data.message = "No Message";
 
             // Init PortAudio
-            PortAudio.Initialize();
+            Pa.Initialize();
 
             // Try setting up an output device
             StreamParameters oParams;
-            oParams.device = PortAudio.DefaultOutputDevice;
-            if (oParams.device == PortAudio.NoDevice)
+            oParams.device = Pa.DefaultOutputDevice;
+            if (oParams.device == Pa.NoDevice)
             {
                 Console.WriteLine("Error, no default output device.");
-                PortAudio.Terminate();
+                Pa.Terminate();
                 return;
             }
             oParams.channelCount = 2;
             oParams.sampleFormat = SampleFormat.Float32;
-            oParams.suggestedLatency = PortAudio.GetDeviceInfo(oParams.device).defaultLowOutputLatency;
+            oParams.suggestedLatency = Pa.GetDeviceInfo(oParams.device).defaultLowOutputLatency;
             oParams.hostApiSpecificStreamInfo = IntPtr.Zero;
 
             // Try to setup a stream
@@ -135,7 +135,7 @@ namespace Sinewave
             audio.Close();
             audio.Dispose();
 
-            PortAudio.Terminate();
+            Pa.Terminate();
             Console.WriteLine("Test Finished");
         }
     }

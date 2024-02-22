@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 using sf_count_t = System.Int64;
 
-namespace SndFileSharp
+namespace SndFile
 {
     internal static partial class Native
     {

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace SndFileSharp
+namespace SndFile
 {
     public class SndFileException : Exception
     {

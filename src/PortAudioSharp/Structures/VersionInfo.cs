@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     /// <summary>
     /// A structure containing PortAudio API version information.

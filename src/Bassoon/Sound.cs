@@ -3,8 +3,8 @@
 
 using System;
 using System.Runtime.InteropServices;
-using SndFileSharp;
-using PortAudioSharp;
+using SndFile;
+using PortAudio;
 
 namespace Bassoon
 {
@@ -17,7 +17,7 @@ namespace Bassoon
         private bool disposed = false;
 
         /// <summary>The actual audio data</summary>
-        internal SndFile audioFile;
+        internal Sf audioFile;
 
         /// <summary>
         /// Audio level, should be between [0.0, 1.0].
@@ -58,7 +58,7 @@ namespace Bassoon
             BassoonEngine be = BassoonEngine.Instance;
 
             // Load the data file
-            audioFile = new SndFile(path);
+            audioFile = new Sf(path);
 
             // Setup the playback stream
             // Get the channel count

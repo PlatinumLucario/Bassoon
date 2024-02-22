@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using HostApiIndex = System.Int32;
 using Time = System.Double;
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     /// <summary>
     /// A structure providing information and capabilities of PortAudio devices.

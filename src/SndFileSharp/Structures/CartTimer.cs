@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SndFileSharp
+namespace SndFile
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct CartTimer

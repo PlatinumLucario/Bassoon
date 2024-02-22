@@ -1,7 +1,7 @@
 // License:     APL 2.0
 // Author:      Benjamin N. Summerton <https://16bpp.net>
 
-namespace SndFileSharp
+namespace SndFile
 {
     /// <summary>
     /// The following are the valid command numbers for the sf_command()

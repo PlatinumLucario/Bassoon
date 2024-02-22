@@ -3,7 +3,7 @@
 
 using sf_count_t = System.Int64;
 
-namespace SndFileSharp
+namespace SndFile
 {
     public static class Constants
     {

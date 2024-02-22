@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,7 +6,7 @@
     <!-- NuGet Packaging info -->
     <Title>PortAudioSharp</Title>
     <Description>C# friendly bindings to PortAudio</Description>
-    <Version>0.3</Version>
+    <Version>0.4</Version>
     <Authors>Benjamin N. Summerton</Authors>
     <IncludeSource>true</IncludeSource>
     <Copyright>Copyright 2019</Copyright>
@@ -15,6 +15,8 @@
     <PackageProjectUrl>https://gitlab.com/define-private-public/Bassoon</PackageProjectUrl>
     <PackageTags>audio music playback cross platform PortAudio port audio</PackageTags>
     <PackageReleaseNotes>Added bindings to functions to query device count and default input device ID</PackageReleaseNotes>
+    <SolutionDir Condition="'$(SolutionDir)'=='' or '$(SolutionDir)'=='*Undefined*'">../</SolutionDir>
+    <Platforms>AnyCPU;x64;ARM64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,9 +25,9 @@
   
   <!-- Native libraries needed for building -->
   <ItemGroup>
-    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux'))" Include="$(SolutionDir)../third_party/lib/portaudio/x64-linux/libportaudio.a" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
-    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX'))" Include="$(SolutionDir)../third_party/lib/portaudio/x64-macos/libportaudio.dylib" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
-    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows'))" Include="$(SolutionDir)../third_party/lib/portaudio/x64-windows/portaudio.dll" TargetPath="%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux')) And '$(Platform)' != 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/linux-x64/libportaudio.a" TargetPath="lib/linux-x64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX')) And '$(Platform)' != 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/macos-x64/libportaudio.dylib" TargetPath="lib/macos-x64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows')) And '$(Platform)' != 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/win-x64/portaudio.dll" TargetPath="lib/win-x64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
   </ItemGroup>
   
   <!-- Commented out in development branch so `/third_party/lib` DLLs can be used instead

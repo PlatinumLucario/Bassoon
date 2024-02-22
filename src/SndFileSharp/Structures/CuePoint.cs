@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SndFileSharp
+namespace SndFile
 {
     /// <summary>
     /// Struct used to retrieve cue marker information from a file

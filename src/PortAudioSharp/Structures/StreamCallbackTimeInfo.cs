@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 using Time = System.Double;
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     /// <summary>
     /// Timing information for the buffers passed to the stream callback.

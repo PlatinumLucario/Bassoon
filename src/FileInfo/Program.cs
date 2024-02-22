@@ -2,7 +2,7 @@
 // Author:      Benjamin N. Summerton <https://16bpp.net>
 
 using System;
-using SndFileSharp;
+using SndFile;
 
 namespace FileInfo
 {
@@ -16,7 +16,7 @@ namespace FileInfo
             Console.WriteLine("Hello libsndfile#!");
             Console.WriteLine($"Native library version: {LibSndFile.Version()}");
 
-            using (SndFile wav = new SndFile(args[0]))
+            using (Sf wav = new Sf(args[0]))
             {
                 Console.WriteLine(wav.Info);
                 Console.WriteLine($"Format good?: {wav.Info.FormatCheck()}");

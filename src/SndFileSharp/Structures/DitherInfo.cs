@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace SndFileSharp
+namespace SndFile
 {
     /// <summary>
     /// Enums and typedefs for adding dither on read and write.

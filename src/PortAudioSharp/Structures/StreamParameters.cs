@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using DeviceIndex = System.Int32;
 using Time = System.Double;
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     /// <summary>
     /// Parameters for one direction (input or output) of a stream.

@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace SndFileSharp
+namespace SndFile
 {
     /// <summary>
     /// The SF_FORMAT_INFO struct is used to retrieve information about the sound

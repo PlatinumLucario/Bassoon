@@ -1,7 +1,7 @@
 // License:     APL 2.0
 // Author:      Benjamin N. Summerton <https://16bpp.net>
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     /// <summary>
     /// Allowable return values for the PaStreamCallback.

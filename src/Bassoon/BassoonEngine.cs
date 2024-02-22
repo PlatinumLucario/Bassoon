@@ -2,8 +2,8 @@
 // Author:      Benjamin N. Summerton <https://16bpp.net>
 
 using System;
-using PortAudioSharp;
-using SndFileSharp;
+using PortAudio;
+using SndFile;
 
 namespace Bassoon
 {
@@ -46,25 +46,25 @@ namespace Bassoon
         public BassoonEngine()
         {
             // Load up the native libraries first
-            PortAudio.LoadNativeLibrary();
+            Pa.LoadNativeLibrary();
             LibSndFile.LoadNativeLibrary();
 
             // First check if the singleton is setup
             if (Instance != null)
                 throw new BassoonException("BassoonEngine is a singleton, and cannot be instantiated more than once");
 
-            PortAudio.Initialize();
+            Pa.Initialize();
             Instance = this;
 
             // Try setting up an output device
             StreamParameters oParams;
-            oParams.device = PortAudio.DefaultOutputDevice;
-            if (oParams.device == PortAudio.NoDevice)
+            oParams.device = Pa.DefaultOutputDevice;
+            if (oParams.device == Pa.NoDevice)
                 throw new BassoonException("No default audio output device available");
 
             oParams.channelCount = 2;
             oParams.sampleFormat = SampleFormat.Float32;
-            oParams.suggestedLatency = PortAudio.GetDeviceInfo(oParams.device).defaultLowOutputLatency;
+            oParams.suggestedLatency = Pa.GetDeviceInfo(oParams.device).defaultLowOutputLatency;
             oParams.hostApiSpecificStreamInfo = IntPtr.Zero;
 
             // Set it as a the default
@@ -73,7 +73,7 @@ namespace Bassoon
 
         ~BassoonEngine()
         {
-            dispose(false);
+            Dispose(false);
         }
 
         /// <summary>
@@ -81,14 +81,14 @@ namespace Bassoon
         /// </summary>
         public void Dispose()
         {
-            dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         /// <summary>
         /// Does the actual disposing work
         /// </summary>
-        protected virtual void dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposed)
                 return;
@@ -99,7 +99,7 @@ namespace Bassoon
             }
 
             // Free Unmanaged resources
-            PortAudio.Terminate();
+            Pa.Terminate();
 
             // Reset the Singleton
             Instance = null;

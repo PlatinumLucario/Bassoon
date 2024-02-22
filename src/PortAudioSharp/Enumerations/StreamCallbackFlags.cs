@@ -3,7 +3,7 @@
 
 using System;
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     /// <summary>
     /// NOTE: this doesn't exist an as actual enum in the native library, but we can make it a bit safer in C#

@@ -1,0 +1,64 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Based on the bundle_gtk.targets file from Pinta: https://github.com/PintaProject/Pinta/ -->
+  <!-- Install GTK library dependencies on Windows, from the MSYS installation. -->
+  <PropertyGroup>
+    <!-- Note this can be overridden by an environment variable with the same name. -->
+    <ClangFolder>C:\msys64\clangarm64</ClangFolder>
+    <ClangBinFolder>$(ClangFolder)\bin</ClangBinFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Library link dependencies (run `ldd libgtk-4-1.dll | grep '\/Clang.*\.dll' -o`) -->
+    <GtkFile Include="$(ClangBinFolder)\libbrotlidec.dll" TargetPath="libbrotlidec.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libbrotlicommon.dll" TargetPath="libbrotlicommon.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libcairo-2.dll" TargetPath="libcairo-2.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libcairo-gobject-2.dll" TargetPath="libcairo-gobject-2.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libcairo-script-interpreter-2.dll" TargetPath="libcairo-script-interpreter-2.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libdatrie-1.dll" TargetPath="libdatrie-1.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libdeflate.dll" TargetPath="libdeflate.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libepoxy-0.dll" TargetPath="libepoxy-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libexpat-1.dll" TargetPath="libexpat-1.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libffi-8.dll" TargetPath="libffi-8.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libfontconfig-1.dll" TargetPath="libfontconfig-1.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libfreetype-6.dll" TargetPath="libfreetype-6.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libfribidi-0.dll" TargetPath="libfribidi-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libgdk_pixbuf-2.0-0.dll" TargetPath="libgdk_pixbuf-2.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libgio-2.0-0.dll" TargetPath="libgio-2.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libglib-2.0-0.dll" TargetPath="libglib-2.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libgmodule-2.0-0.dll" TargetPath="libgmodule-2.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libgobject-2.0-0.dll" TargetPath="libgobject-2.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libgraphene-1.0-0.dll" TargetPath="libgraphene-1.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libgraphite2.dll" TargetPath="libgraphite2.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libgtk-4-1.dll" TargetPath="libgtk-4-1.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libharfbuzz-0.dll" TargetPath="libharfbuzz-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libiconv-2.dll" TargetPath="libiconv-2.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libintl-8.dll" TargetPath="libintl-8.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libjbig-0.dll" TargetPath="libjbig-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libjpeg-8.dll" TargetPath="libjpeg-8.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libLerc.dll" TargetPath="libLerc.dll" />
+    <GtkFile Include="$(ClangBinFolder)\liblzma-5.dll" TargetPath="liblzma-5.dll" />
+    <GtkFile Include="$(ClangBinFolder)\liblzo2-2.dll" TargetPath="liblzo2-2.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libpango-1.0-0.dll" TargetPath="libpango-1.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libpangocairo-1.0-0.dll" TargetPath="libpangocairo-1.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libpangoft2-1.0-0.dll" TargetPath="libpangoft2-1.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libpangowin32-1.0-0.dll" TargetPath="libpangowin32-1.0-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libpcre2-8-0.dll" TargetPath="libpcre2-8-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libpixman-1-0.dll" TargetPath="libpixman-1-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libpng16-16.dll" TargetPath="libpng16-16.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libsharpyuv-0.dll" TargetPath="libsharpyuv-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libthai-0.dll" TargetPath="libthai-0.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libtiff-6.dll" TargetPath="libtiff-6.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libwebp-7.dll" TargetPath="libwebp-7.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libwinpthread-1.dll" TargetPath="libwinpthread-1.dll" />
+    <GtkFile Include="$(ClangBinFolder)\libzstd.dll" TargetPath="libzstd.dll" />
+    <GtkFile Include="$(ClangBinFolder)\zlib1.dll" TargetPath="zlib1.dll" />
+
+    <!-- <GtkFile Include="$(ClangFolder)\share\glib-2.0\schemas\**" LinkBase="..\share\glib-2.0\schemas" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="@(GtkFile)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+  </ItemGroup>
+</Project>

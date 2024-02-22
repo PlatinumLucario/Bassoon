@@ -3,7 +3,7 @@
 
 using System;
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     public class PortAudioException : Exception
     {

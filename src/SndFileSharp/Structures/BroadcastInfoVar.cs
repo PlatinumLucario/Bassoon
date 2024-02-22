@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SndFileSharp
+namespace SndFile
 {
     /// <summary>
     /// Struct used to retrieve broadcast (EBU) information from a file.

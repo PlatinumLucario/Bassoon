@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PortAudioSharp
+namespace PortAudio
 {
     internal static partial class Native
     {
@@ -102,13 +102,13 @@ namespace PortAudioSharp
         /// The input parameters for this stream, if any
         /// </summary>
         /// <value>will be `null` if the user never supplied any</value>
-        public StreamParameters? inputParameters { get; private set; }
+        public StreamParameters? InputParameters { get; private set; }
 
         /// <summary>
         /// The output parameters for this stream, if any
         /// </summary>
         /// <value>will be `null` if the user never supplied any</value>
-        public StreamParameters? outputParameters { get; private set; }
+        public StreamParameters? OutputParameters { get; private set; }
 
 
         #region Constructors & Cleanup
@@ -187,8 +187,8 @@ namespace PortAudioSharp
             userDataHandle = GCHandle.Alloc(userData);
 
             // Set the ins and the outs
-            inputParameters = inParams;
-            outputParameters = outParams;
+            InputParameters = inParams;
+            OutputParameters = outParams;
 
             // If the in/out params are set, then we need to make some P/Invoke friendly memory
             IntPtr inParamsPtr = IntPtr.Zero;
@@ -227,7 +227,7 @@ namespace PortAudioSharp
 
         ~Stream()
         {
-            dispose(false);
+            Dispose(false);
         }
 
         /// <summary>
@@ -235,14 +235,14 @@ namespace PortAudioSharp
         /// </summary>
         public void Dispose()
         {
-            dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         /// <summary>
         /// Does the actual disposing work
         /// </summary>
-        protected virtual void dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposed)
                 return;

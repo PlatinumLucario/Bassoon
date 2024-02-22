@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using SNDFILEPtr = System.IntPtr;
 using sf_count_t = System.Int64;
 
-namespace SndFileSharp
+namespace SndFile
 {
     internal static partial class Native
     {
@@ -68,7 +68,7 @@ namespace SndFileSharp
     /// <summary>
     /// Right now only supports reading files
     /// </summary>
-    public class SndFile : IDisposable
+    public class Sf : IDisposable
     {
         private bool disposed = false;
 
@@ -76,7 +76,7 @@ namespace SndFileSharp
         public bool IsFileOpen { get; private set; } = false;
         public Info Info { get; private set; }
 
-        public SndFile(string path)
+        public Sf(string path)
         {
             Info info = new Info();
             handle = Native.sf_open(path, SFMode.Read, ref info);
@@ -100,7 +100,7 @@ namespace SndFileSharp
 */
 
         #region IDisposable
-        ~SndFile()
+        ~Sf()
         {
             dispose(false);
         }
