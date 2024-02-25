@@ -4,7 +4,7 @@
 rd /s /q ..\packages
 ::
 :: Updates and copies the libraries from VCPKG
-.\setup_all.py
+.\setup_libs_all.py
 ::
 :: Generates the project files, creates directories and copies the libraries
 .\generate.py

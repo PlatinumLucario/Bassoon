@@ -5,6 +5,8 @@ import pathlib
 import subprocess
 import shutil
 
+from pathlib import Path
+
 # Some OS flags
 is_windows = (sys.platform == 'win32') or (sys.platform == 'msys')
 is_linux = sys.platform == 'linux'
@@ -170,7 +172,6 @@ def BuildLinuxDeps(deps):
     lib_src_dir = 'installed/x64-linux/lib/'
     libs_codecs = [
         'libFLAC.so',
-        'libFLAC++.so',
         'libogg.so',
         'libvorbis.so',
         'libvorbisenc.so',
@@ -231,7 +232,6 @@ def BuildLinuxDeps(deps):
     lib_src_dir = 'installed/arm64-linux/lib/'
     libs_codecs = [
         'libFLAC.so',
-        'libFLAC++.so',
         'libogg.so',
         'libvorbis.so',
         'libvorbisenc.so',
@@ -280,7 +280,7 @@ def BuildLinuxDeps(deps):
     # Clear deps list and re-add needed deps
     # Required to prevent the following error:
     # <unknown>:1:23: error: expected eof
-    #  on expression: libsndfile:arm64-linux:x64-osx
+    #  on expression: libsndfile:arm64-linux:x64-osx-dynamic
     #                                       ^
     deps.clear()
     deps = [
@@ -290,10 +290,12 @@ def BuildLinuxDeps(deps):
 
 def BuildMacOSDeps(deps):
     # Build the x86-64 version of the macOS dependencies
-    lib_src_dir = 'installed/x64-osx/lib/'
+    deps[0] = "libsndfile:x64-osx-dynamic"
+    deps[1] = "portaudio:x64-osx-dynamic"
+    
+    lib_src_dir = 'installed/x64-osx-dynamic/lib/'
     libs_codecs = [
         'libFLAC.dylib',
-        'libFLAC++.dylib',
         'libogg.dylib',
         'libvorbis.dylib',
         'libvorbisenc.dylib',
@@ -342,19 +344,18 @@ def BuildMacOSDeps(deps):
     # Clear deps list and re-add needed deps
     # Required to prevent the following error:
     # <unknown>:1:23: error: expected eof
-    #  on expression: libsndfile:x64-os:arm64-osx
+    #  on expression: libsndfile:x64-os:arm64-osx-dynamic
     #                                  ^
     deps.clear()
     deps = [
-        'libsndfile',       # Also will grab libflac, libogg, and libvorbis for us
-        'portaudio',
+        'libsndfile:arm64-osx-dynamic',       # Also will grab libflac, libogg, and libvorbis for us
+        'portaudio:arm64-osx-dynamic',
     ]
 
     # Build the ARM64 version of the macOS dependencies
-    lib_src_dir = 'installed/arm64-osx/lib/'
+    lib_src_dir = 'installed/arm64-osx-dynamic/lib/'
     libs_codecs = [
         'libFLAC.dylib',
-        'libFLAC++.dylib',
         'libogg.dylib',
         'libvorbis.dylib',
         'libvorbisenc.dylib',
@@ -402,37 +403,61 @@ def BuildMacOSDeps(deps):
 
     # If on macOS, we need to fix some issues with the dylibs
     # namely the rpath stuff & dylib IDs,  it's a bit of a pain
-    if is_macos:
-        cmds = []
+    # if is_macos:
+    #     cmds = []
 
-        # First fix Ids
-        print("Fixing dylib IDs...")
-        dylibs = ['ogg', 'vorbis', 'vorbisenc', 'vorbisfile', 'sndfile']
-        for lib in dylibs:
-            lib_filename = 'lib%s.dylib' % (lib)
-            cmd = 'install_name_tool -id "@rpath/{0}" lib/{0}'.format(lib_filename)
-            cmds.append(cmd)
-        print("Done!")
+    #     # First fix Ids
+    #     print("Fixing dylib IDs...")
+    #     dylibs = ['opus', 'mp3lame', 'FLAC', 'ogg', 'vorbis', 'vorbisenc', 'vorbisfile', 'sndfile']
+    #     for lib in dylibs:
+    #         lib_filename = 'lib%s.dylib' % (lib)
+    #         if Path('../lib/codecs/macos-x64/{0}'.format(lib_filename)).is_file():
+    #             cmd = 'install_name_tool -id "@rpath/{0}" ../lib/codec/macos-x64/{0}'.format(lib_filename)
+    #             cmds.append(cmd)
+    #         if Path('../lib/sndfile/macos-x64/{0}'.format(lib_filename)).is_file():
+    #             cmd = 'install_name_tool -id "@rpath/{0}" ../lib/sndfile/macos-x64/{0}'.format(lib_filename)
+    #             cmds.append(cmd)
+    #         if Path('../lib/codecs/macos-arm64/{0}'.format(lib_filename)).is_file():
+    #             cmd = 'install_name_tool -id "@rpath/{0}" ../lib/codec/macos-arm64/{0}'.format(lib_filename)
+    #             cmds.append(cmd)
+    #         if Path('../lib/sndfile/macos-arm64/{0}'.format(lib_filename)).is_file():
+    #             cmd = 'install_name_tool -id "@rpath/{0}" ../lib/sndfile/macos-arm64/{0}'.format(lib_filename)
+    #             cmds.append(cmd)
+    #     print("Done!")
 
-        # Now fix the references
-        print("Fixing rpath references...")
-        changes = [
-            # (old, new, [targets])
-            ('ogg.0', 'ogg',                   ['FLAC', 'sndfile', 'vorbis', 'vorbisenc', 'vorbisfile']),
-            ('vorbis.0.4.8', 'vorbis',         ['sndfile', 'vorbisenc', 'vorbisfile']),
-            ('vorbisfile.3.3.7', 'vorbisfile', ['sndfile']),
-            ('vorbisenc.2.0.11', 'vorbisenc',  ['sndfile']),
-        ]
-        for (o, n, targets) in changes:
-            for t in targets:
-                change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" lib/lib{2}.dylib'.format(o, n, t)
-                cmds.append(change_cmd)
-        print("Done!")
+    #     # Now fix the references
+    #     print("Fixing rpath references...")
+    #     changes = [
+    #         # (old, new, [targets])
+    #         ('opus.0', 'opus',            ['opus', 'sndfile']),
+    #         ('mp3lame.0', 'mp3lame',        ['mp3lame', 'sndfile', 'mpg123', 'syn123', 'out123']),
+    #         ('FLAC.12.1.0', 'FLAC',              ['FLAC', 'sndfile']),
+    #         ('ogg.0.8.5', 'ogg',                ['FLAC', 'sndfile', 'vorbis', 'vorbisenc', 'vorbisfile']),
+    #         ('vorbis.0.4.9', 'vorbis',          ['sndfile', 'vorbisenc', 'vorbisfile']),
+    #         ('vorbisfile.3.3.8', 'vorbisfile',  ['sndfile']),
+    #         ('vorbisenc.2.0.1.2', 'vorbisenc',    ['sndfile']),
+    #         ('sndfile.1.0.37', 'sndfile',        ['sndfile']),
+    #     ]
+    #     for (o, n, targets) in changes:
+    #         for t in targets:
+    #             if Path('../lib/codecs/macos-x64/lib{2}.dylib').is_file():
+    #                 change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" ../lib/codecs/macos-x64/lib{2}.dylib'.format(o, n, t)
+    #                 cmds.append(change_cmd)
+    #             if Path('../lib/sndfile/macos-x64/lib{2}.dylib').is_file():
+    #                 change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" ../lib/sndfile/macos-x64/lib{2}.dylib'.format(o, n, t)
+    #                 cmds.append(change_cmd)
+    #             if Path('../lib/codecs/macos-arm64/lib{2}.dylib').is_file():
+    #                 change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" ../lib/codecs/macos-arm64/lib{2}.dylib'.format(o, n, t)
+    #                 cmds.append(change_cmd)
+    #             if Path('../lib/sndfile/macos-arm64/lib{2}.dylib').is_file():
+    #                 change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" ../lib/sndfile/macos-arm64/lib{2}.dylib'.format(o, n, t)
+    #                 cmds.append(change_cmd)
+    #     print("Done!")
 
-        # Run the commands
-        print("Running neccessary commands...")
-        [os.system(x) for x in cmds]
-        print("Done!")
+    #     # Run the commands
+    #     print("Running neccessary commands...")
+    #     [os.system(x) for x in cmds]
+    #     print("Done!")
         
 def Main():
     # Currently, I don't know how to compile libraries of every OS within one OS

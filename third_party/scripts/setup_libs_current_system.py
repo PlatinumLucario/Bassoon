@@ -36,7 +36,7 @@ elif not os.path.exists(vcpkg_dir):
 
 # Some OS specific configurations
 if is_windows:
-    # If on windows, need to build the 64 bit version
+    # If on windows
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg.exe')
     if is_x64:
         deps = ['%s:x64-windows' % x for x in deps]
@@ -63,6 +63,7 @@ if is_windows:
         'portaudio.dll',
     ]
 elif is_linux:
+    # If on linux
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg')
     if is_x64:
         lib_src_dir = 'installed/x64-linux/lib/'
@@ -88,11 +89,14 @@ elif is_linux:
         'libportaudio.a',
     ]
 elif is_macos:
+    # If on macos
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg')
     if is_x64:
-        lib_src_dir = 'installed/x64-osx/lib/'
+        deps = ['%s:x64-osx-dynamic' % x for x in deps]
+        lib_src_dir = 'installed/x64-osx-dynamic/lib/'
     elif is_aarch64:
-        lib_src_dir = 'installed/arm64-osx/lib/'
+        deps = ['%s:arm64-osx-dynamic' % x for x in deps]
+        lib_src_dir = 'installed/arm64-osx-dynamic/lib/'
     libs_codecs = [
         'libFLAC.dylib',
         'libFLAC++.dylib',
@@ -269,36 +273,36 @@ elif is_macos:
 
 # If on macOS, we need to fix some issues with the dylibs
 # namely the rpath stuff & dylib IDs,  it's a bit of a pain
-if is_macos:
-    cmds = []
+# if is_macos:
+#     cmds = []
 
-    # First fix Ids
-    print("Fixing dylib IDs...")
-    dylibs = ['ogg', 'vorbis', 'vorbisenc', 'vorbisfile', 'sndfile']
-    for lib in dylibs:
-        lib_filename = 'lib%s.dylib' % (lib)
-        cmd = 'install_name_tool -id "@rpath/{0}" lib/{0}'.format(lib_filename)
-        cmds.append(cmd)
-    print("Done!")
+#     # First fix Ids
+#     print("Fixing dylib IDs...")
+#     dylibs = ['ogg', 'vorbis', 'vorbisenc', 'vorbisfile', 'sndfile']
+#     for lib in dylibs:
+#         lib_filename = 'lib%s.dylib' % (lib)
+#         cmd = 'install_name_tool -id "@rpath/{0}" lib/{0}'.format(lib_filename)
+#         cmds.append(cmd)
+#     print("Done!")
 
-    # Now fix the references
-    print("Fixing rpath references...")
-    changes = [
-        # (old, new, [targets])
-        ('ogg.0', 'ogg',                   ['FLAC', 'sndfile', 'vorbis', 'vorbisenc', 'vorbisfile']),
-        ('vorbis.0.4.8', 'vorbis',         ['sndfile', 'vorbisenc', 'vorbisfile']),
-        ('vorbisfile.3.3.7', 'vorbisfile', ['sndfile']),
-        ('vorbisenc.2.0.11', 'vorbisenc',  ['sndfile']),
-    ]
-    for (o, n, targets) in changes:
-        for t in targets:
-            change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" lib/lib{2}.dylib'.format(o, n, t)
-            cmds.append(change_cmd)
-    print("Done!")
+#     # Now fix the references
+#     print("Fixing rpath references...")
+#     changes = [
+#         # (old, new, [targets])
+#         ('ogg.0', 'ogg',                   ['FLAC', 'sndfile', 'vorbis', 'vorbisenc', 'vorbisfile']),
+#         ('vorbis.0.4.8', 'vorbis',         ['sndfile', 'vorbisenc', 'vorbisfile']),
+#         ('vorbisfile.3.3.7', 'vorbisfile', ['sndfile']),
+#         ('vorbisenc.2.0.11', 'vorbisenc',  ['sndfile']),
+#     ]
+#     for (o, n, targets) in changes:
+#         for t in targets:
+#             change_cmd = 'install_name_tool -change "@rpath/lib{0}.dylib" "@rpath/lib{1}.dylib" lib/lib{2}.dylib'.format(o, n, t)
+#             cmds.append(change_cmd)
+#     print("Done!")
 
-    # Run the commands
-    print("Running neccessary commands...")
-    [os.system(x) for x in cmds]
-    print("Done!")
+#     # Run the commands
+#     print("Running neccessary commands...")
+#     [os.system(x) for x in cmds]
+#     print("Done!")
 print("All neccessary tasks completed!")
 

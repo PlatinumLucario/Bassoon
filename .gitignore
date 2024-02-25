@@ -321,10 +321,13 @@ ASALocalRun/
 *.sw*
 .vscode
 
-# Aduio test data
+# Audio test data
 *.wav
 *.ogg
 *.flac
 
 # Doxygen
 docs_html
+
+# macOS Directory Service Store data
+.DS_Store

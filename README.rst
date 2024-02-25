@@ -167,16 +167,19 @@ for Windows though.
 1. Microsoft's Vcpkg_ is what's used to build the native libraries.  It's pretty simple to get
    setup.  In their ``README``, document follow their ``Quick Start`` section.  All you need to do
    is have it bootstrapped and you should be fine (no need to do ``integrate install`` if you don't
-   want to bake you dev environment.
+   want it to be baked into your dev environment).
 
-2. Run the third party setup script.  Make sure to set the envrionment variable ``VCPKG_DIR`` to
-   where you installed Vcpkg. If you are running Windows, you only need to set the environment variable
-   for ``VGPKG_DIR`` to the directory of your Vcpkg installation. However, if you're running Linux or
-   macOS, you will need to run the following commands in a terminal:
+2. Run the third party setup script. To setup your vcpkg environment, Either run
+   ``setup_vcpkg_env.sh`` (macOS and Linux) or ``setup_vcpkg_env.bat`` (Windows),
+   or do it manually:
+     Make sure to set the envrionment variable ``VCPKG_DIR`` to where you installed Vcpkg.
+     If you are running Windows, you only need to set the environment variable for ``VGPKG_DIR``
+     to the directory of your Vcpkg installation. However, if you're running Linux or macOS, you will
+     need to run the following commands in a terminal:
 
    .. code-block:: bash
 
-      cd third_party/
+      cd third_party/scripts
       export VCPKG_DIR=<Vcpkg install dir>      # e.g. export VCPKG_DIR=~/vcpkg
       python3 setup.py
 

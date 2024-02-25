@@ -6,7 +6,7 @@ set -ex # This sets the shell to end if there's an error (e), and print out comm
 
 rm -rf ../packages # The packages directory needs to be removed, so it can be made again
 
-./setup_all.py # Updates and copies the libraries from VCPKG
+./setup_libs_all.py # Updates and copies the libraries from VCPKG
 
 ./generate.py # Generates the project files, creates directories and copies the libraries
 
