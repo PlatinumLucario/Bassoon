@@ -28,6 +28,10 @@
     <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux')) And '$(Platform)' != 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/linux-x64/libportaudio.a" TargetPath="lib/linux-x64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
     <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX')) And '$(Platform)' != 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/macos-x64/libportaudio.dylib" TargetPath="lib/macos-x64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
     <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows')) And '$(Platform)' != 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/win-x64/portaudio.dll" TargetPath="lib/win-x64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Linux')) And '$(Platform)' == 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/linux-arm64/libportaudio.a" TargetPath="lib/linux-arm64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('OSX')) And '$(Platform)' == 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/macos-arm64/libportaudio.dylib" TargetPath="lib/macos-arm64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <ContentWithTargetPath Condition="$([MSBuild]::IsOSPlatform('Windows')) And '$(Platform)' == 'ARM64' And '$(Configuration)' == 'Debug'" Include="$(SolutionDir)../third_party/lib/portaudio/win-arm64/portaudio.dll" TargetPath="lib/win-arm64/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
   </ItemGroup>
   
   <!-- Commented out in development branch so `/third_party/lib` DLLs can be used instead

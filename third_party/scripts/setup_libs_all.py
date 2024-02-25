@@ -224,26 +224,28 @@ def BuildLinuxDeps(deps):
     #                                     ^
     deps.clear()
     deps = [
-        'libsndfile',       # Also will grab libflac, libogg, and libvorbis for us
-        'portaudio',
+        'libsndfile:arm64-linux',       # Also will grab libflac, libogg, and libvorbis for us
+        'portaudio:arm64-linux',
     ]
 
     # Build the ARM64 version of the Linux dependencies
+    # Note: VCPKG doesn't support building dynamic libs yet,
+    #       so we have to use the static ones instead.
     lib_src_dir = 'installed/arm64-linux/lib/'
     libs_codecs = [
-        'libFLAC.so',
-        'libogg.so',
-        'libvorbis.so',
-        'libvorbisenc.so',
-        'libvorbisfile.so',
-        'libopus.so',
-        'libmp3lame.so',
-        'libmpg123.so',
-        'libout123.so',
-        'libsyn123.so',
+        'libFLAC.a',
+        'libogg.a',
+        'libvorbis.a',
+        'libvorbisenc.a',
+        'libvorbisfile.a',
+        'libopus.a',
+        'libmp3lame.a',
+        'libmpg123.a',
+        'libout123.a',
+        'libsyn123.a',
     ]
     libs_sndfile = [
-        'libsndfile.so',
+        'libsndfile.a',
     ]
     libs_portaudio = [
         'libportaudio.a',
