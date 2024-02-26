@@ -67,23 +67,37 @@ elif is_linux:
     vcpkg_exe = os.path.join(vcpkg_dir, 'vcpkg')
     if is_x64:
         lib_src_dir = 'installed/x64-linux/lib/'
+        libs_codecs = [
+            'libFLAC.so',
+            'libogg.so',
+            'libvorbis.so',
+            'libvorbisenc.so',
+            'libvorbisfile.so',
+            'libopus.so',
+            'libmp3lame.so',
+            'libmpg123.so',
+            'libout123.so',
+            'libsyn123.so',
+        ]
+        libs_sndfile = [
+            'libsndfile.so',
+    ]
     elif is_aarch64:
         lib_src_dir = 'installed/arm64-linux/lib/'
-    libs_codecs = [
-        'libFLAC.so',
-        'libFLAC++.so',
-        'libogg.so',
-        'libvorbis.so',
-        'libvorbisenc.so',
-        'libvorbisfile.so',
-        'libopus.so',
-        'libmp3lame.so',
-        'libmpg123.so',
-        'libout123.so',
-        'libsyn123.so',
-    ]
-    libs_sndfile = [
-        'libsndfile.so',
+        libs_codecs = [
+            'libFLAC.a',
+            'libogg.a',
+            'libvorbis.a',
+            'libvorbisenc.a',
+            'libvorbisfile.a',
+            'libopus.a',
+            'libmp3lame.a',
+            'libmpg123.a',
+            'libout123.a',
+            'libsyn123.a',
+        ]
+        libs_sndfile = [
+            'libsndfile.a',
     ]
     libs_portaudio = [
         'libportaudio.a',
@@ -99,7 +113,6 @@ elif is_macos:
         lib_src_dir = 'installed/arm64-osx-dynamic/lib/'
     libs_codecs = [
         'libFLAC.dylib',
-        'libFLAC++.dylib',
         'libogg.dylib',
         'libvorbis.dylib',
         'libvorbisenc.dylib',

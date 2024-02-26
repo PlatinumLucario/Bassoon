@@ -160,8 +160,8 @@ Steps 1 & 2 only need to be run once.  After that, you can go ahead to step 3 an
 start working on the C# component of this project.
 
 You'll at least need some standard C/C++ compiler envrionment and Python 3 installed.  A note for
-windows is that an MSYS2 environment was used for development (i.e. Bash), but you should be also
-able to use a Powershell environment too; though that's undocumented.  I do recommend MSYS2/bash
+Windows is that an MSYS2 environment was originally used for development (i.e. Bash), but you should
+be able to use a Powershell environment too; though that's undocumented. I do recommend MSYS2/bash
 for Windows though.
 
 1. Microsoft's Vcpkg_ is what's used to build the native libraries.  It's pretty simple to get
@@ -177,11 +177,11 @@ for Windows though.
      to the directory of your Vcpkg installation. However, if you're running Linux or macOS, you will
      need to run the following commands in a terminal:
 
-   .. code-block:: bash
+     .. code-block:: bash
 
-      cd third_party/scripts
-      export VCPKG_DIR=<Vcpkg install dir>      # e.g. export VCPKG_DIR=~/vcpkg
-      python3 setup.py
+        cd third_party/scripts
+        export VCPKG_DIR=<Vcpkg install dir>      # e.g. export VCPKG_DIR=~/vcpkg
+        python3 setup.py
 
    Now the setup script will run; this could take a bit.  Once it's done, do ``ls lib/``.  There
    should be some DLLs (or shared libraries) for your system.  Look to see that a ``sndfile`` and a
@@ -195,7 +195,7 @@ for Windows though.
       source set_dev_env.h
 
 You should be good to go at this point.  To test that everthing worked fine, I recommend trying to
-run the ``Jukebox`` sample.  Go into it's directory and do ``dotnet run``.  If it launches fine,
+run the ``Jukebox`` sample.  Go into its directory and do ``dotnet run``.  If it launches fine,
 then that means portaudio is working fine. And if you can load a song and play it back then you're
 good!
 
