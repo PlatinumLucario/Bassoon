@@ -23,7 +23,13 @@
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Platforms>AnyCPU;x64;ARM64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="./README.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+  
 
 </Project>

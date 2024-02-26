@@ -16,9 +16,14 @@
     <PackageTags>audio music decoding cross platform wav ogg vorbis flac aiff libsndfile sndfile</PackageTags>
     <PackageReleaseNotes>Native libraries now included in package</PackageReleaseNotes>
     <SolutionDir Condition="'$(SolutionDir)'=='' or '$(SolutionDir)'=='*Undefined*'">../</SolutionDir>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Platforms>AnyCPU;x64;ARM64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="./README.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="NativeLibraryManager" Version="1.0.23" />
     

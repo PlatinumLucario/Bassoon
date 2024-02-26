@@ -8,9 +8,9 @@ export BASSOON_ROOT
 
 
 # Download or update the dependencies
-pushd ./third_party/scripts
-./run.sh
-popd
+# pushd ./third_party/scripts
+# ./run.sh
+# popd
 
 # Create the release packages
 dotnet pack -c Release $BASSOON_ROOT/src/SndFileSharp

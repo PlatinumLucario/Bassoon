@@ -12,15 +12,14 @@ Bassoon - Cross Platform .NET (Core) Audio Playback
 A simple C#/.NET API to load & play audio files.  Currently supports WAV, AIFF, OGG, Vorbis, FLAC,
 and more (see ``libsndfile``'s official documentation), on Windows, OS X, and Linux.
 
-Right now, the native libraries aren't packaged on NuGet, so you will need to build them yourself.
-Though soon enough they will be up on Nuget. Currently, the native libraries are included here in
-this repo, so the projects can be copied into the binary directory when building, without having
-to install VCPKG or msys2 in order to get them. However, do note that the dependencies for each
-operating system and architecture is not complete yet, however it would be great if anyone
-contributes the needed libraries.
+This project now includes all the native nuget libraries! Yes, all of them! No more hassles of having
+to set up the dev environment manually anymore, that's all in the past now :)
 
-In the meantime, look at the `Developing`_ section for how to update the libraries or get the
-native libraries for your platform.
+The native libraries included here in this repo are automatically copied into the binary directory
+when building on the Debug configuration, without any need for VCPKG or msys2 in order to get them.
+
+If you'd like to update the native libraries, see the `Developing`_ section for how to update the
+libraries or to contribute further to the project.
 
 Currently uses these versions of the native libraries:
 
@@ -45,9 +44,9 @@ libout123, and libsyn123.
 
 
 
-**************************************
+***************************************
 A Note About Running on Linux and macOS
-**************************************
+***************************************
 
 If you're only targeting windows, then you don't need to pay attention to this.  But then why would
 you be using a cross platform library? :]
@@ -129,7 +128,7 @@ Help Wanted
 
 * NuGet packaging
 
-  * I'd like to have this library on NuGet, along w/ the required native libraries.
+  * Some help with setting up CI for automatic updating of native library packages.
 
 * Audio Recording. This should be possible, it would be nice
 

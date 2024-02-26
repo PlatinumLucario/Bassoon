@@ -16,9 +16,14 @@
     <PackageTags>audio music playback cross platform PortAudio port audio</PackageTags>
     <PackageReleaseNotes>Added bindings to functions to query device count and default input device ID</PackageReleaseNotes>
     <SolutionDir Condition="'$(SolutionDir)'=='' or '$(SolutionDir)'=='*Undefined*'">../</SolutionDir>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Platforms>AnyCPU;x64;ARM64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="./README.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="NativeLibraryManager" Version="1.0.23" />
     
