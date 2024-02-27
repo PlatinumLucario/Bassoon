@@ -95,7 +95,7 @@ A Short Code Example
 Sub-Projects
 ************
 
-These are all found in ``src/Bassoon/``
+These are all found in ``src/``
 
 * ``SndFileSharp``: C# bindings to ``libsndfile``.  Only supports file reading
   funcitonality at the moment.
