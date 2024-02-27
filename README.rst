@@ -224,7 +224,7 @@ means that one of the projects wasn't able to find a native DLL. Double check th
 all in their correct places and let me know of the error so I can fix the issue in the script,
 or submit a MR with the fixes, so I can merge in the fixes.
 
-A big special thanks to [Fangjun Kuang](https://github.com/csukuangfj) and their [PortAudioSharp2 repo](https://github.com/csukuangfj/PortAudioSharp2)
+A big special thanks to `Fangjun Kuang <https://github.com/csukuangfj>`_ and their `PortAudioSharp2 repo <https://github.com/csukuangfj/PortAudioSharp2>`_
 for this awesome script that packages native libraries! This has helped improve the libraries
 so much that it can now be built with little effort.
 
