@@ -155,8 +155,8 @@ Help Wanted
 Developing
 **********
 
-Steps 1 & 2 only need to be run once.  After that, you can go ahead to step 3 any time you want to
-start working on the C# component of this project.
+Steps 1 & 2 only need to be run once to update the native libraries.  After that, you can go ahead
+to step 3 any time you want to start working on the C# component of this project.
 
 You'll at least need some standard C/C++ compiler envrionment and Python 3 installed.  A note for
 Windows is that an MSYS2 environment was originally used for development (i.e. Bash), but you should
@@ -204,30 +204,29 @@ good!
 Making NuGet Packages
 *********************
 
-I've tried to set this up so it's as simple as possible to make packages for NuGet, but it's a
-little bit inovled still.
+Making the NuGet packages is much more easier than it was before. For native libraries, all you need
+to do is do the following:
+1. (Optional) If you need to setup Vcpkg without having to do several commands manually, run either
+``setup_vcpkg_env.bat`` (Windows) or ``setup_vcpkg_env.sh``. Please note that it will be set up in the
+following locations: ``C:\src\vcpkg`` in Windows, and ``~/source/vcpkg`` in Linux and macOS.
 
-1. You will need to build the native libraries for each platform.  Collect them from each respective
-   system's ``/third_party/lib/`` output, and then put them on the computer where you want to build
-   the packages (I recommend on Linux).
+2. Run the ``run.bat`` (Windows) or ``run.sh`` (Linux and macOS) file, and the libraries will
+be updated in the Vcpkg directory, the native library projects will be generated, then the native
+libraries will be copied to the projects, then the projects are built, packed and all ready in
+``./third_party/packages/``.
 
-2. Switch to the branch ``release_nuget_packaging``.
+3. To pack the PortAudioSharp, SndFileSharp and Bassoon projects into NuGet packages, either run
+``mk_nuget_packges.bat`` (Windows) or ``mk_nuget_packges.sh`` (Linux and macOS).
 
-3. Look at the project files for ``PortAudioSharp.csproj`` and ``libsndfileSharp.csproj``.  At all
-   all of the ``<EmbeddedResource ...>`` tags, they will tell you what native library files need to
-   be placed alongside each project.
+If everthing went fine, that you should see the ``*.nupkg``'s right in the root directory. If
+not, you'll probably see some errors. If it says "Error reading resource", then that most likely
+means that one of the projects wasn't able to find a native DLL. Double check that you put them
+all in their correct places and let me know of the error so I can fix the issue in the script,
+or submit a MR with the fixes, so I can merge in the fixes.
 
-4. Go to the root directory of this project, and run the following commands:
-
-   .. code-block:: bash
-
-      source set_dev_env.sh
-      ./mk_nuget_packges.sh
-
-   If everthing went fine, that you should see the ``*.nupkg``'s right in the root directory.  If
-   not, you'll probably see some errors.  If they say "Error reading resource", that most likely
-   means that one of the projects wasn't able to find a native DLL.  Double check that you put them
-   all in their correct places.
+A big special thanks to [Fangjun Kuang](https://github.com/csukuangfj) and their [PortAudioSharp2 repo](https://github.com/csukuangfj/PortAudioSharp2)
+for this awesome script that packages native libraries! This has helped improve the libraries
+so much that it can now be built with little effort.
 
 
 
